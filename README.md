@@ -12,8 +12,7 @@
 
 ### Backend
 
-- Rails
-- Ruby
+- Rails API
 
 ### DB
 
