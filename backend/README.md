@@ -1,4 +1,6 @@
-# Rails API
+# Backend Project
+
+### Rails API
 
 - Rails 6.1.6
 - Ruby 2.7.4
