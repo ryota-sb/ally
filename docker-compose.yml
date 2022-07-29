@@ -3,10 +3,10 @@ services:
   frontend:
     build: ./frontend/
     volumes:
-      - ./frontend:/app
-    command: "npm run dev"
+      - ./frontend/app:/usr/src/app
+    command: "yarn dev"
     ports:
-      - "8000:8000"
+      - "8000:3000"
 
   backend:
     build: ./backend/
@@ -21,7 +21,7 @@ services:
     stdin_open: true
 
   db:
-    image: mysql:8:0
+    image: mysql:8.0
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # 文字コード変更
     platform: linux/x86_64
     volumes:
