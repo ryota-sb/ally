@@ -10,3 +10,11 @@
 ```bash
 yarn add @auth0/auth0-react
 ```
+
+## Store
+
+Recoil（React 用状態管理ライブラリ）
+
+```bash
+yarn add recoil
+```
