@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const redirectUri = `${process.env["NEXT_PUBLIC_BASE_URL"]}/login`;
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       audience={process.env["NEXT_PUBLIC_AUTH0_AUDIENCE"]!}
       redirectUri={redirectUri}
     >
-      <Component {...pageProps} />
+      <RecoilRoot>
+        <Component {...pageProps} />
+      </RecoilRoot>
     </Auth0Provider>
   );
 }
