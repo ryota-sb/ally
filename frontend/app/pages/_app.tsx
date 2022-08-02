@@ -4,7 +4,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const redirectUri = `${process.env["NEXT_PUBLIC_BASE_URL"]}/login`;
+  const redirectUri = `${process.env["NEXT_PUBLIC_BASE_URL"]}`;
   return (
     <Auth0Provider
       domain={process.env["NEXT_PUBLIC_AUTH0_DOMAIN"]!}
