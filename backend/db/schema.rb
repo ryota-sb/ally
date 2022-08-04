@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_03_100910) do
+ActiveRecord::Schema.define(version: 2022_08_04_111229) do
 
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -26,9 +26,10 @@ ActiveRecord::Schema.define(version: 2022_08_03_100910) do
     t.string "game_category"
     t.string "descord_id"
     t.integer "gender"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -38,4 +39,5 @@ ActiveRecord::Schema.define(version: 2022_08_03_100910) do
   end
 
   add_foreign_key "posts", "users"
+  add_foreign_key "profiles", "users"
 end

@@ -5,7 +5,7 @@ class CreateProfiles < ActiveRecord::Migration[6.1]
       t.string "game_category"
       t.string "descord_id"
       t.integer "gender"
-      t.integer "user_id"
+      t.belongs_to :user, index: { unique: true }, foreign_key: true
       t.timestamps
     end
   end
