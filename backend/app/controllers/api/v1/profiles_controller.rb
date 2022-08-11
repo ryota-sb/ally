@@ -23,6 +23,6 @@ class Api::V1::ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.permit(:gender, :game_rank, :game_category, :descord_id)
+    params.permit(:gender, :game_rank, :game_category, :descord_id, :image)
   end
 end

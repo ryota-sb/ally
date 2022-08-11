@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_08_151523) do
+ActiveRecord::Schema.define(version: 2022_08_11_041846) do
 
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2022_08_08_151523) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.string "image"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
