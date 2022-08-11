@@ -1,21 +1,28 @@
 class Api::V1::ProfilesController < ApplicationController
-  skip_before_action :authorize_request, only: [:index]
-  before_action :set_params, only: [:create, :update]
-
-  def index
-    profiles = User.profiles
-  end
 
   def create
-    profile = User.profiles
+    profile = Profile.new(profile_params)
+    profile.user_id = @current_user.id
+    
+    if profile.save
+      render json: profile
+    else
+      render json: profile.errors, status: :unprocessable_entity
+    end
   end
 
   def update
+    profile = Profile.find(params[:id])
+    if profile.update(profile_params)
+      render json: profile
+    else
+      render json: profile.errors, status: :unprocessable_entity
+    end
   end
 
   private
 
-  def set_params
+  def profile_params
     params.permit(:gender, :game_rank, :game_category, :descord_id)
   end
 end
