@@ -34,6 +34,7 @@ const BlogPage: NextPage = () => {
   };
   return (
     <div>
+      <p>{token}</p>
       <p>ブログ投稿</p>
       <label htmlFor="">タイトル</label>
       <input

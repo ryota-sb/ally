@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import tokenState from "../../../recoil/atoms/tokenState";
+import tokenState from "../../recoil/atoms/tokenState";
 
 const Login: NextPage = () => {
   const { isAuthenticated, logout, getAccessTokenSilently } = useAuth0();
@@ -39,16 +39,16 @@ const Login: NextPage = () => {
       ) : (
         <div className="grid grid-cols-1">
           <button
-            className="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            className="mb-2 transform rounded-md bg-green-600  px-4 py-2 capitalize text-white transition-colors duration-500 hover:bg-green-500"
             onClick={() => loginWithRedirect()}
           >
-            Sign Up
+            はじめての方
           </button>
           <button
-            className="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+            className="transform rounded-md bg-blue-600 px-4 py-2 capitalize text-white transition-colors duration-500 hover:bg-blue-500"
             onClick={() => loginWithRedirect()}
           >
-            Sign In
+            ログイン
           </button>
         </div>
       )}

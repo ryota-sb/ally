@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Header from "./components/header";
-import Login from "./components/login";
+import Header from "../components/Header";
+import Login from "../components/login";
 
 // header token 確認用
 import { useRecoilValue } from "recoil";
@@ -16,10 +16,10 @@ const Home: NextPage = () => {
       </Head>
       <Header />
       <main>
-        <div className="truncate w-full max-w-sm px-4 py-3 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <div className="mx-auto w-full max-w-sm truncate rounded-md bg-white px-4 py-3 shadow-md dark:bg-gray-800">
           <p>{token}</p>
         </div>
-        <div className="h-screen w-screen flex justify-center items-center">
+        <div className="flex h-screen w-screen items-center justify-center">
           <Login />
         </div>
       </main>
