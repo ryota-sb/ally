@@ -1,9 +1,16 @@
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import tokenState from "../recoil/atoms/tokenState";
+
+if (typeof window !== "undefined") {
+  if (window.location.pathname === "/callback") {
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  }
+}
 
 const Callback: NextPage = () => {
   const token = useRecoilValue(tokenState);
@@ -18,6 +25,7 @@ const Callback: NextPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        console.log(token);
       });
   });
 
