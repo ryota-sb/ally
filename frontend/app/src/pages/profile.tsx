@@ -1,5 +1,8 @@
 import { NextPage } from "next";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import tokenState from "../recoil/atoms/tokenState";
 
 type formState = {
   gender: string;
@@ -12,6 +15,8 @@ type formState = {
 type Props = {};
 
 const Profile: NextPage<Props> = () => {
+  const token = useRecoilValue(tokenState);
+
   const {
     register,
     handleSubmit,
@@ -29,6 +34,18 @@ const Profile: NextPage<Props> = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
+    const url = "http://localhost:3000/api/v1/profiles";
+    const headers = { Authorization: `Bearer ${token}` };
+    axios
+      .post(url, data, { headers: headers })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(token);
+      });
+    console.log(token);
     console.log(data);
   });
 
