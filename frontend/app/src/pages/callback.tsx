@@ -31,7 +31,7 @@ const Callback: NextPage = () => {
 
   return (
     <div>
-      <h1>Waiting...</h1>
+      <h1>ログインが完了しました。３秒後にページを移動します。</h1>
     </div>
   );
 };
