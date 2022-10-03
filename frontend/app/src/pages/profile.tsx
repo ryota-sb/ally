@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import tokenState from "../recoil/atoms/tokenState";
+import { useRouter } from "next/router";
 
 type formState = {
   gender: string;
@@ -16,6 +17,7 @@ type Props = {};
 
 const Profile: NextPage<Props> = () => {
   const token = useRecoilValue(tokenState);
+  const router = useRouter();
 
   const {
     register,
@@ -33,26 +35,24 @@ const Profile: NextPage<Props> = () => {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = async (data: formState) => {
     const url = "http://localhost:3000/api/v1/profiles";
     const headers = { Authorization: `Bearer ${token}` };
-    axios
+    await axios
       .post(url, data, { headers: headers })
       .then((res) => {
         console.log(res.data);
       })
-      .catch((err) => {
+      .then((err) => {
         console.log(err);
-        console.log(token);
       });
-    console.log(token);
-    console.log(data);
-  });
+    router.push("/");
+  };
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center">
       <h1 className="mb-10 text-3xl">プロフィール設定</h1>
-      <form className="w-full max-w-sm" onSubmit={onSubmit}>
+      <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-6">
           {/* gender */}
           <div className="mb-6 flex">
