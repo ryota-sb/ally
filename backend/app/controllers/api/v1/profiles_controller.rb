@@ -1,5 +1,9 @@
 class Api::V1::ProfilesController < ApplicationController
 
+  def show
+    profile = Profile.find(params[:id])
+  end
+
   def create
     profile = Profile.new(profile_params)
     profile.user_id = @current_user.id
