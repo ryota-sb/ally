@@ -1,6 +1,6 @@
 class Api::V1::SecuredController < ApplicationController
   def login
-    render json: { 
+    render json: {
       status: 200,
       message: "SUB: #{@current_user.sub}でログインしました。",
       data: @current_user
