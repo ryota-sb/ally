@@ -1,24 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, FC } from "react";
-import { useSetRecoilState } from "recoil";
-import tokenState from "../../recoil/atoms/tokenState";
+import { FC } from "react";
 
 const Login: FC = () => {
-  const { getAccessTokenSilently, loginWithRedirect } = useAuth0();
-  const setToken = useSetRecoilState(tokenState);
-
-  // ログイン後にトークンを取得し、Recoilへトークンを格納
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently({});
-        setToken(accessToken);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-    getToken();
-  }, []);
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <div>
