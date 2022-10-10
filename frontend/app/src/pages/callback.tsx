@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import { useRecoilState } from "recoil";
 import tokenState from "../recoil/atoms/tokenState";
+import userState from "../recoil/atoms/userState";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -19,6 +20,7 @@ if (typeof window !== "undefined") {
 
 const Callback: NextPage = () => {
   const [token, setToken] = useRecoilState(tokenState);
+  const [user, setUser] = useRecoilState(userState);
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const Callback: NextPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
+          setUser(res.data.data);
           console.log(res.data);
         })
         .catch((err) => {
