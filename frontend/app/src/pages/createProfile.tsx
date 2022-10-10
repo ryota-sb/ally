@@ -29,10 +29,10 @@ const CreateProfile: NextPage<Props> = () => {
   });
 
   const onSubmit = async (data: ProfileState) => {
-    const url = "http://localhost:3000/api/v1/profiles";
-    const headers = { Authorization: `Bearer ${token}` };
     await axios
-      .post(url, data, { headers: headers })
+      .post("http://localhost:3000/api/v1/profiles", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log(res.data);
       })
