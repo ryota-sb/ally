@@ -21,14 +21,8 @@ services:
     stdin_open: true
 
   db:
-    image: mysql:8.0
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # 文字コード変更
-    platform: linux/x86_64
+    image: postgres
     volumes:
-      - ./backend/docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./backend/docker/mysql/data:/var/lib/mysql
+      - ./postgres:/var/lib/postgresql/data
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - TZ=Asia/Tokyo
-    ports:
-      - "3306:3306"
+      POSTGRES_PASSWORD: password

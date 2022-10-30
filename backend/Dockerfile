@@ -6,7 +6,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn
 
-Run mkdir /app
+RUN mkdir /app
 WORKDIR /app
 
 COPY Gemfile /app/Gemfile

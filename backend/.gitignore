@@ -28,6 +28,3 @@
 
 # development用 環境変数ファイル
 /.env
-
-# development用 db データファイル
-/docker/mysql/

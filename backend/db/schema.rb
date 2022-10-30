@@ -10,16 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_12_021220) do
+ActiveRecord::Schema.define(version: 2022_10_30_123901) do
 
-  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "likes", force: :cascade do |t|
     t.integer "from_user_id", null: false
     t.integer "to_user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
     t.text "caption"
@@ -28,10 +31,10 @@ ActiveRecord::Schema.define(version: 2022_08_12_021220) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "profiles", force: :cascade do |t|
     t.string "game_rank"
     t.string "game_category"
-    t.string "descord_id"
+    t.string "discord_id"
     t.integer "gender", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -40,7 +43,7 @@ ActiveRecord::Schema.define(version: 2022_08_12_021220) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "sub", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
