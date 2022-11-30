@@ -1,21 +1,18 @@
-database:
-  - name: app_production
-    databaseName: app_production
-    user: postgres
-    region: oregon
+databases:
+  - name: app_admin
+    databaseName: app_admin
+    user: app_admin
 
 services:
   - type: web
-    name: app_production
+    name: app_admin
     env: ruby
-    region: oregon
-    plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: app_production
+          name: app_admin
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
