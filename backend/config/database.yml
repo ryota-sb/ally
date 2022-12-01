@@ -17,6 +17,6 @@ test:
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: app_production
-  username: app-admin
+  database: ally_production
+  username: ally_production_user
   password: <%= ENV['APP_DATABASE_PASSWORD'] %>
