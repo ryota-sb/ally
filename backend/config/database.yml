@@ -18,5 +18,6 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   database: ally_production
-  username: ally_production_user
-  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
