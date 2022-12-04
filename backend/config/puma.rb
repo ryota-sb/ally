@@ -12,7 +12,6 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
-# render.comデプロイ用の設定
 workers ENV.fetch("WEB_CONCURRENCY") { 4 }
 
 plugin :tmp_restart
