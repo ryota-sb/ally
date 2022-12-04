@@ -15,8 +15,6 @@ RUN bundle config set --global force_ruby_platform true && bundle install
 
 COPY . /app
 
-RUN yarn install --frozen-lockfile
-
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
