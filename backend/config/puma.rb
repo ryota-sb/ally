@@ -14,4 +14,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 workers ENV.fetch("WEB_CONCURRENCY") { 4 }
 
+preload_app!
+
 plugin :tmp_restart
