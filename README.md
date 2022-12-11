@@ -1,6 +1,6 @@
 # Ally
 
-ゲームを一緒にする友達を探すマッチングアプリです。
+ゲームを一緒にする仲間を探すマッチングアプリ。
 
 ## 環境
 
@@ -9,11 +9,13 @@
 - Next.js
 - TypeScript
 - TailwindCSS
+- Vercel
 
 ### Backend
 
 - Rails API
+- Render
 
 ### DB
 
-- MySQL
+- PostgreSQL
