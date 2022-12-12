@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :profile
+  has_one :profile, dependent: :destroy
   has_many :posts, dependent: :destroy
 
   has_many :likes_from, class_name: 'Like', foreign_key: :from_user_id, dependent: :destroy
