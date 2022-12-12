@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_30_123901) do
+ActiveRecord::Schema.define(version: 2022_12_12_111505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,13 +33,14 @@ ActiveRecord::Schema.define(version: 2022_10_30_123901) do
 
   create_table "profiles", force: :cascade do |t|
     t.string "game_rank"
-    t.string "game_category"
+    t.string "game_category", null: false
     t.string "discord_id"
     t.integer "gender", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.string "image"
+    t.string "nickname"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
