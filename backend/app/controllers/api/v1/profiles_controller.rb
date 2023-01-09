@@ -1,7 +1,14 @@
 class Api::V1::ProfilesController < ApplicationController
+  skip_before_action :authorize_request, only: [:index, :show]
+
+  def index
+    profiles = Profile.all
+    render json: profiles
+  end
 
   def show
     profile = Profile.find(params[:id])
+    render json: profile
   end
 
   def create
@@ -27,6 +34,6 @@ class Api::V1::ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.permit(:gender, :game_rank, :game_category, :descord_id, :image)
+    params.permit(:gender, :game_rank, :game_category, :descord_id, :image, :nickname)
   end
 end
