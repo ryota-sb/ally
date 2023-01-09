@@ -6,7 +6,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # render.com deploy用 追記
-  config.hosts.clear
+  config.hosts << "backend"
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.cache_store = :memory_store
