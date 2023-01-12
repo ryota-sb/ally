@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSetRecoilState } from "recoil";
-import tokenState from "../../recoil/atoms/tokenState";
-import userState from "../../recoil/atoms/userState";
+import tokenState from "../recoil/atoms/tokenState";
+import userState from "../recoil/atoms/userState";
 
 const Header: FC = () => {
   const { isAuthenticated, logout } = useAuth0();
