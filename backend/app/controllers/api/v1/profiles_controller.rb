@@ -14,7 +14,7 @@ class Api::V1::ProfilesController < ApplicationController
   def create
     profile = Profile.new(profile_params)
     profile.user_id = @current_user.id
-    
+
     if profile.save
       render json: profile
     else
