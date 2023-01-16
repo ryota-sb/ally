@@ -2,10 +2,12 @@ import { NextPage } from "next";
 import { useEffect } from "react";
 
 import { useRecoilState } from "recoil";
-import tokenState from "../recoil/atoms/tokenState";
-import userState from "../recoil/atoms/userState";
+import tokenState from "recoil/atoms/tokenState";
+import userState from "recoil/atoms/userState";
 
 import { useAuth0 } from "@auth0/auth0-react";
+
+import Loading from "pages/loading";
 
 import axios from "axios";
 
@@ -51,11 +53,7 @@ const Callback: NextPage = () => {
     }
   });
 
-  return (
-    <div>
-      <h1>ログインが完了しました。３秒後にページを移動します。</h1>
-    </div>
-  );
+  return <Loading />;
 };
 
 export default Callback;
