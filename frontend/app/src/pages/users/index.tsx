@@ -5,6 +5,8 @@ import useSWR from "swr";
 
 import Loading from "pages/loading";
 import Layout from "components/Layout";
+import XCircle from "components/XCircle";
+import CheckCircle from "components/CheckCircle";
 
 import { Profile } from "types/index";
 
@@ -43,9 +45,13 @@ const Users: NextPage = () => {
             <div>{data.game_category}</div>
             <div>{data.game_rank}</div>
           </div>
-          <div className="mt-40 flex gap-3">
-            <button>OK</button>
-            <button>NotOK</button>
+          <div className="mt-40 flex gap-8">
+            <button>
+              <XCircle size={60} />
+            </button>
+            <button>
+              <CheckCircle size={60} />
+            </button>
           </div>
         </div>
       </div>
