@@ -28,3 +28,6 @@
 
 # development用 環境変数ファイル
 /.env
+
+# 開発環境の画像は、GitHubに保存しない
+/public/uploads
