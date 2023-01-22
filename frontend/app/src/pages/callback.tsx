@@ -11,12 +11,12 @@ import Loading from "pages/loading";
 
 import axios from "axios";
 
-// ３秒後にルートパスに画面遷移
+// 2秒後にルートパスに画面遷移
 if (typeof window !== "undefined") {
   if (window.location.pathname === "/callback") {
     setTimeout(() => {
       window.location.href = "/";
-    }, 3000);
+    }, 2000);
   }
 }
 
