@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import useSWR from "swr";
 
-import type { ProfileData } from "types/index";
+import { ProfileData } from "types/index";
 
 import Loading from "pages/loading";
 import Layout from "components/Layout";
