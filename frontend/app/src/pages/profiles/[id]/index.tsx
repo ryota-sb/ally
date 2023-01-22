@@ -4,17 +4,18 @@ import Image from "next/image";
 
 import useSWR from "swr";
 
-import type { Profile } from "types/index";
+import type { ProfileData } from "types/index";
 
 import Loading from "pages/loading";
 import Layout from "components/Layout";
 
-const fetcher = (url: string): Promise<Profile> =>
-  fetch(url).then((res) => res.json());
-
 const Profile: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+
+  const fetcher = (url: string): Promise<ProfileData> =>
+    fetch(url).then((res) => res.json());
+
   const { data, error } = useSWR(
     id ? `http://localhost:3000/api/v1/profiles/${id}` : null,
     fetcher
