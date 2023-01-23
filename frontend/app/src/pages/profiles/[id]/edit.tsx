@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import useSWR from "swr";
 
@@ -35,13 +34,6 @@ const Edit: NextPage<Props> = () => {
     fetcher
   );
 
-  // ログインユーザーのプロフィールでなければ、ルートへ遷移
-  useEffect(() => {
-    if (!currentUser || currentUser.id !== data?.user_id) {
-      router.push("/");
-    }
-  });
-
   // フォームの初期値
   const defaultValues: ProfileInputs = {
     nickname: data?.nickname,
@@ -54,6 +46,11 @@ const Edit: NextPage<Props> = () => {
 
   if (error) return <div>An error has occurred.</div>;
   if (!data) return <Loading />;
+
+  // ログインユーザーのプロフィールでなければ、ルートへ遷移
+  if (data && currentUser.id !== data?.user_id) {
+    router.push("/");
+  }
 
   return (
     <Layout>
