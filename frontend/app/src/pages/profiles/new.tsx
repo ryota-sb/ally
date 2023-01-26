@@ -2,6 +2,11 @@ import { NextPage } from "next";
 
 import { ProfileData, ProfileInputs } from "types/index";
 
+import { useRecoilValue } from "recoil";
+import profileState from "recoil/atoms/profileState";
+
+import { useClient } from "hooks/useClient";
+
 import Layout from "components/Layout";
 import ProfileForm from "components/ProfileForm";
 
@@ -9,20 +14,34 @@ type Props = {
   profile: ProfileData;
 };
 
-// フォームの初期値
-const defaultValues: ProfileInputs = {
-  nickname: "",
-  gender: "",
-  discord_id: "",
-  game_rank: "",
-  game_category: "",
-  image: { url: "" },
-};
-
 const Create: NextPage<Props> = () => {
+  const profileValue = useRecoilValue(profileState);
+  const isClient = useClient();
+
+  // フォームの初期値
+  const defaultValues: ProfileInputs = {
+    nickname: "",
+    gender: "",
+    discord_id: "",
+    game_rank: "",
+    game_category: "",
+    image: { url: "" },
+  };
+
   return (
     <Layout>
-      <ProfileForm defaultValues={defaultValues} />
+      {isClient && (
+        <div>
+          {profileValue ? (
+            <div className="flex h-screen w-screen flex-col items-center justify-center">
+              <h1 className="text-3xl">プロフィールは、作成済です。</h1>
+              <button>プロフィール更新へ</button>
+            </div>
+          ) : (
+            <ProfileForm defaultValues={defaultValues} />
+          )}
+        </div>
+      )}
     </Layout>
   );
 };
