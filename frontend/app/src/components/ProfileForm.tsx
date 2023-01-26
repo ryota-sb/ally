@@ -7,8 +7,9 @@ import axios from "axios";
 import { ProfileData, ProfileInputs } from "../types/index";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
+import profileState from "recoil/atoms/profileState";
 
 type Props = {
   profileData?: ProfileData;
@@ -17,6 +18,8 @@ type Props = {
 
 const ProfileForm = (props: Props) => {
   const router = useRouter();
+  const token = useRecoilValue(tokenState);
+  const [profileValue, setProfileValue] = useRecoilState(profileState);
 
   const profile = props?.profileData;
   const isProfile = !profile;
@@ -52,7 +55,6 @@ const ProfileForm = (props: Props) => {
 
   // headerに認証トークンをセットして返す
   const setConfig = async () => {
-    const token = await useRecoilValue(tokenState);
     const config = {
       headers: { authorization: `Bearer ${token}` },
     };
@@ -68,7 +70,10 @@ const ProfileForm = (props: Props) => {
         { profile: profileInputData },
         config
       )
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        setProfileValue(res.data);
+        console.log(res.data);
+      })
       .then((err) => console.log(err));
     router.push("/");
 
@@ -78,6 +83,7 @@ const ProfileForm = (props: Props) => {
   // プロフィールを更新し、プロフィール詳細画面へ遷移
   const updateProfile = async (id: number, profileInputData: ProfileInputs) => {
     const config = await setConfig();
+    console.log(profileInputData);
     const res = await axios
       .patch(
         `http://localhost:3000/api/v1/profiles/${id}`,
