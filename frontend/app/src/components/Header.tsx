@@ -1,22 +1,10 @@
 import { FC } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useSetRecoilState } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
-import userState from "recoil/atoms/userState";
-import profileState from "recoil/atoms/profileState";
+
+import Logout from "components/Logout";
 
 const Header: FC = () => {
-  const { isAuthenticated, logout } = useAuth0();
-  const setToken = useSetRecoilState(tokenState);
-  const setUser = useSetRecoilState(userState);
-  const setProfile = useSetRecoilState(profileState);
-
-  const userLogout = () => {
-    setToken("");
-    setUser("");
-    setProfile("");
-    logout({ returnTo: window.location.origin });
-  };
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className="bg-white shadow dark:bg-gray-800">
@@ -50,7 +38,7 @@ const Header: FC = () => {
                     href="#"
                     className="mx-2 mt-2 transform rounded-md px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 md:mt-0"
                   >
-                    <button onClick={() => userLogout()}>ログアウト</button>
+                    <Logout />
                   </a>
                 </div>
               </div>
