@@ -4,7 +4,6 @@ import Image from "next/image";
 import useSWR from "swr";
 
 import Loading from "pages/loading";
-import Layout from "components/Layout";
 import XCircle from "components/XCircle";
 import CheckCircle from "components/CheckCircle";
 
@@ -29,7 +28,7 @@ const Users: NextPage = () => {
   if (!data) return <Loading />;
 
   return (
-    <Layout>
+    <div>
       {profileValue ? (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100">
           <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
@@ -58,6 +57,8 @@ const Users: NextPage = () => {
             </div>
           </div>
         </div>
+      ) : !token ? (
+        <Loading />
       ) : (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h1 className="text-3xl">初めにプロフィール作成してください</h1>
@@ -75,7 +76,7 @@ const Users: NextPage = () => {
           </button>
         </div>
       )}
-    </Layout>
+    </div>
   );
 };
 
