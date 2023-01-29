@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useEffect } from "react";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
@@ -23,8 +23,8 @@ if (typeof window !== "undefined") {
 
 const Callback: NextPage = () => {
   const [token, setToken] = useRecoilState(tokenState);
-  const [user, setUser] = useRecoilState(userState);
-  const [profile, setProfile] = useRecoilState(profileState);
+  const setUser = useSetRecoilState(userState);
+  const setProfile = useSetRecoilState(profileState);
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const Callback: NextPage = () => {
       try {
         const accessToken = await getAccessTokenSilently({});
         setToken(accessToken);
+        console.log(accessToken);
       } catch (e) {
         console.log(e.message);
       }
