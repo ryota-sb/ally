@@ -50,7 +50,7 @@ const ProfileForm = (props: Props) => {
   const onSubmit: SubmitHandler<ProfileInputs> = (profileInputData) => {
     return isProfile
       ? createProfile(profileInputData)
-      : updateProfile(profile.id, profileInputData);
+      : updateProfile(profile!.id, profileInputData);
   };
 
   // headerに認証トークンをセットして返す
