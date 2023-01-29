@@ -23,7 +23,7 @@ const Header: FC = () => {
               <div className="flex-1 md:flex md:items-center md:justify-between">
                 <div className="-mx-4 flex flex-col md:mx-8 md:flex-row md:items-center">
                   <a
-                    href="/users"
+                    href="/"
                     className="mx-2 mt-2 transform rounded-md px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 md:mt-0"
                   >
                     探す
