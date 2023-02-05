@@ -41,7 +41,7 @@ const Edit: NextPage<Props> = () => {
     discord_id: data?.discord_id,
     game_rank: data?.game_rank,
     game_category: data?.game_category,
-    image: { url: data?.image?.url },
+    image: { url: data?.image?.url! },
   };
 
   if (error) return <div>An error has occurred.</div>;
