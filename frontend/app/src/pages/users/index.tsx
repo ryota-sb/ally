@@ -45,7 +45,6 @@ const Users: NextPage = () => {
             <div className="flex gap-3">
               <div>{data.game_category}</div>
               <div>{data.game_rank}</div>
-              <div>{data.image?.url}</div>
             </div>
             <div className="mt-40 flex gap-8">
               <button>
