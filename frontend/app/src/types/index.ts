@@ -1,3 +1,4 @@
+// プロフィールのフォーム入力データ
 export type ProfileInputs = {
   nickname?: string;
   gender?: string;
@@ -7,7 +8,7 @@ export type ProfileInputs = {
   image?: { url: string };
 };
 
-// ProfileInputsを継承
+// プロフィールのデータ
 export type ProfileData = ProfileInputs & {
   id: number;
   user_id: number;
