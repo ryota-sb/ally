@@ -4,7 +4,7 @@ export type ProfileInputs = {
   discord_id?: string;
   game_rank?: string;
   game_category?: string;
-  image?: { url?: string };
+  image?: { url: string };
 };
 
 // ProfileInputsを継承
