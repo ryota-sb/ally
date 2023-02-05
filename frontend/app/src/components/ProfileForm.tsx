@@ -2,12 +2,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import axios from "axios";
-
 import { ProfileData, ProfileInputs } from "../types/index";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 import profileState from "recoil/atoms/profileState";
 
@@ -19,21 +17,24 @@ type Props = {
 const ProfileForm = (props: Props) => {
   const router = useRouter();
   const token = useRecoilValue(tokenState);
-  const [profileValue, setProfileValue] = useRecoilState(profileState);
+  const setProfileValue = useSetRecoilState(profileState);
 
   const profile = props?.profileData;
   const isProfile = !profile;
 
+  // 入力フォームのデフォルト値
   const defaultValues = props?.defaultValues;
 
-  const [previewImage, setPreviewImage] = useState("/noimage.png");
+  const [image, setImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string>("/noimage.png");
 
+  // 画像が選択された時に、値をセットする
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const fileObject = e.target.files[0].name;
-    console.log(fileObject);
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fileObject = window.URL.createObjectURL(file);
     setPreviewImage(fileObject);
-    console.log(window.URL.createObjectURL(fileObject));
+    setImage(file);
   };
 
   // ReactHookFormのuseForm関数を定義
@@ -43,58 +44,58 @@ const ProfileForm = (props: Props) => {
     formState: { errors },
   } = useForm<ProfileInputs>({
     mode: "onChange",
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
   // プロフィールデータがあるかどうかで、リクエストを変更する
   const onSubmit: SubmitHandler<ProfileInputs> = (profileInputData) => {
+    const formData = new FormData();
+    formData.append("profile[nickname]", profileInputData.nickname!);
+    formData.append("profile[gender]", profileInputData.gender!);
+    formData.append("profile[game_category]", profileInputData.game_category!);
+    formData.append("profile[game_rank]", profileInputData.game_rank!);
+    formData.append("profile[discord_id]", profileInputData.discord_id!);
+    formData.append("profile[image]", image!, image!.name);
+    console.log(formData);
     return isProfile
-      ? createProfile(profileInputData)
-      : updateProfile(profile!.id, profileInputData);
+      ? createProfile(formData)
+      : updateProfile(profile!.id, formData);
   };
 
-  // headerに認証トークンをセットして返す
-  const setConfig = async () => {
+  type HttpMethods = "GET" | "POST" | "PUT" | "DELETE";
+
+  // リクエストに必要な情報をセット
+  const setConfig = (http: HttpMethods, data: FormData) => {
     const config = {
+      method: http,
       headers: { authorization: `Bearer ${token}` },
+      body: data,
     };
     return config;
   };
 
   // プロフィールを新規作成、ルートディレクトリへ遷移
-  const createProfile = async (profileInputData: ProfileInputs) => {
-    const config = await setConfig();
-    const res = await axios
-      .post(
-        "http://localhost:3000/api/v1/profiles",
-        { profile: profileInputData },
-        config
-      )
-      .then((res) => {
-        setProfileValue(res.data);
-        console.log(res.data);
-      })
-      .then((err) => console.log(err));
+  const createProfile = async (profileInputData: FormData) => {
+    const config = setConfig("POST", profileInputData);
+    const response = await fetch(
+      "http://localhost:3000/api/v1/profiles",
+      config
+    );
+    const data: ProfileData = await response.json();
+    setProfileValue(data);
     router.push("/");
-
-    return res;
   };
 
   // プロフィールを更新し、プロフィール詳細画面へ遷移
-  const updateProfile = async (id: number, profileInputData: ProfileInputs) => {
-    const config = await setConfig();
-    console.log(profileInputData);
-    const res = await axios
-      .patch(
-        `http://localhost:3000/api/v1/profiles/${id}`,
-        { profile: profileInputData },
-        config
-      )
-      .then((res) => console.log(res.data))
-      .then((err) => console.log(err));
-    router.push("/");
-
-    return res;
+  const updateProfile = async (id: number, profileInputData: FormData) => {
+    const config = setConfig("PUT", profileInputData);
+    const response = await fetch(
+      `http://localhost:3000/api/v1/profiles/${id}`,
+      config
+    );
+    const data: ProfileData = await response.json();
+    setProfileValue(data);
+    router.push(`/profiles/${id}`);
   };
 
   return (
@@ -173,9 +174,12 @@ const ProfileForm = (props: Props) => {
             </div>
             <div className="w-2/3">
               <input
-                {...register("game_category")}
+                {...register("game_category", { required: true })}
                 className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
               />
+              {errors.game_category && (
+                <div className="text-red-500">入力が必須の項目です。</div>
+              )}
             </div>
           </div>
           {/* image */}
@@ -189,7 +193,7 @@ const ProfileForm = (props: Props) => {
               <input
                 type="file"
                 accept="image/*"
-                {...register("image.url")}
+                {...register("image")}
                 onChange={onFileInputChange}
                 className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
               />
