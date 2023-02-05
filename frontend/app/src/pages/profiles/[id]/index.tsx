@@ -1,10 +1,14 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 
 import useSWR from "swr";
 
-import { ProfileData } from "types/index";
+import { User, ProfileData } from "types/index";
+
+import { useRecoilValue } from "recoil";
+import userState from "recoil/atoms/userState";
 
 import Loading from "pages/loading";
 import Layout from "components/Layout";
@@ -12,6 +16,8 @@ import Layout from "components/Layout";
 const Profile: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+
+  const currentUser: User = useRecoilValue(userState);
 
   const fetcher = (url: string): Promise<ProfileData> =>
     fetch(url).then((res) => res.json());
@@ -24,10 +30,16 @@ const Profile: NextPage = () => {
   if (error) return <div>An error has occurred.</div>;
   if (!data) return <Loading />;
 
+  // ログインユーザーのプロフィールでなければ、ルートへ遷移
+  if (data && currentUser.id !== data?.user_id) {
+    router.push("/");
+  }
+
   return (
     <Layout>
       <div className="flex h-screen w-full items-center justify-center bg-gray-100">
         <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
+          <Link href={`/profiles/${id}/edit`}>Setting</Link>
           <div className="m-10">
             <Image
               src="/113120.jpeg"
@@ -41,10 +53,6 @@ const Profile: NextPage = () => {
           <div className="flex gap-3">
             <div>{data.game_category}</div>
             <div>{data.game_rank}</div>
-          </div>
-          <div className="mt-40 flex gap-3">
-            <button>OK</button>
-            <button>NotOK</button>
           </div>
         </div>
       </div>
