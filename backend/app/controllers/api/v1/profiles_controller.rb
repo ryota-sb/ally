@@ -34,6 +34,6 @@ class Api::V1::ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:image, :gender, :game_rank, :game_category, :discord_id, :nickname)
+    params.require(:profile).permit(:game_rank, :game_category, :discord_id, :gender, :image, :nickname)
   end
 end
