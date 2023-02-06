@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :posts
       resources :users, only: [:index]
       resources :profiles, only: [:index, :show, :create, :update]
-      resources :likes, only: [:index, :create],
+      resources :likes, only: [:index, :create]
       resources :chat_rooms, only: [:index, :show]
       resources :messages, only: [:create]
     end
