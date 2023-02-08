@@ -16,10 +16,31 @@ export type ProfileData = ProfileInputs & {
   updatedAt: Date;
 };
 
+// ユーザー情報
 export type User = {
   id: number;
   sub: string;
   createdAt: Date;
   updatedAt: Date;
   profile?: ProfileData;
+};
+
+export type Like = {
+  id?: number;
+  formUserId: number | undefined | null;
+  toUserId: number | undefined | null;
+};
+
+export type ChatRoom = {
+  chatRoom: { id: number };
+  otherUser: User;
+  otherUserProfile: ProfileData;
+  lastMessage: Message;
+};
+
+export type Message = {
+  userId: number;
+  chatRoomId: number;
+  content: string;
+  createdAt: Date;
 };
