@@ -27,20 +27,20 @@ export type User = {
 
 export type Like = {
   id?: number;
-  formUserId: number | undefined | null;
-  toUserId: number | undefined | null;
+  form_user_id: number | undefined | null;
+  to_user_id: number | undefined | null;
 };
 
 export type ChatRoom = {
-  chatRoom: { id: number };
-  otherUser: User;
-  otherUserProfile: ProfileData;
-  lastMessage: Message;
+  chat_room: { id: number };
+  other_user: User;
+  other_user_profile: ProfileData;
+  last_message: Message;
 };
 
 export type Message = {
-  userId: number;
-  chatRoomId: number;
+  user_id: number;
+  chat_room_id: number;
   content: string;
-  createdAt: Date;
+  created_at: Date;
 };
