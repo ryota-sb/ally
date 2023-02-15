@@ -9,7 +9,7 @@ class UserFetcher {
   static getRandomUser() {
     const token = useRecoilValue(tokenState);
     const { data, error } = useSWR<User>(
-      "http://localhost:3000/api/v1/random_user",
+      "http://localhost:3000/api/v1/random_user_with_profile",
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()
