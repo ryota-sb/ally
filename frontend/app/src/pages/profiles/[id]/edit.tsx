@@ -1,12 +1,11 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import useSWR from "swr";
+import UserFetcher from "hooks/api/user";
 
 import { User, ProfileData, ProfileInputs } from "types/index";
 
 import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 
 import Layout from "components/Layout";
@@ -18,44 +17,38 @@ type Props = {
 };
 
 const Edit: NextPage<Props> = () => {
-  const token = useRecoilValue(tokenState);
+  const router = useRouter();
   const currentUser: User = useRecoilValue(userState);
 
-  const router = useRouter();
-  const { id } = router.query;
-
-  const fetcher = (url: string): Promise<ProfileData> =>
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
-      res.json()
-    );
-
-  const { data, error } = useSWR(
-    id ? `http://localhost:3000/api/v1/profiles/${id}` : null,
-    fetcher
-  );
+  const { user, isLoading, isError } = UserFetcher.getUser(currentUser.id);
 
   // フォームの初期値
   const defaultValues: ProfileInputs = {
-    nickname: data?.nickname,
-    gender: data?.gender,
-    discord_id: data?.discord_id,
-    game_rank: data?.game_rank,
-    game_category: data?.game_category,
-    image: { url: data?.image?.url! },
+    nickname: user?.profile?.nickname,
+    gender: user?.profile?.gender,
+    discord_id: user?.profile?.discord_id,
+    game_rank: user?.profile?.game_rank,
+    game_category: user?.profile?.game_category,
+    image: { url: user?.profile?.image?.url! },
   };
 
-  if (error) return <div>An error has occurred.</div>;
-  if (!data) return <Loading />;
+  if (isLoading) return <Loading />;
+  if (isError) return <div>An error has occurred.</div>;
 
   // ログインユーザーのプロフィールでなければ、ルートへ遷移
-  if (data && currentUser.id !== data?.user_id) {
-    router.push("/");
+  if (currentUser.id !== user?.profile?.user_id) {
+    // router.push("/");
+    console.log(currentUser.id);
+    console.log(user?.profile?.id);
   }
 
   return (
     <Layout>
       <div>
-        <ProfileForm profileData={data} defaultValues={defaultValues} />
+        <ProfileForm
+          profileData={user?.profile}
+          defaultValues={defaultValues}
+        />
       </div>
     </Layout>
   );
