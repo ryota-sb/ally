@@ -36,7 +36,7 @@ const Profile: NextPage = () => {
             <Link href={`/profiles/${user.profile.id}/edit`}>Setting</Link>
             <div className="m-10">
               <Image
-                src="/113120.jpeg"
+                src={user.profile.image?.url!}
                 alt="サンプル画像"
                 width={300}
                 height={300}

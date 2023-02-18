@@ -1,63 +1,54 @@
 import { NextPage } from "next";
 import Image from "next/image";
 
-import useSWR from "swr";
+import UserFetcher from "hooks/api/user";
+
+import { useRecoilValue } from "recoil";
+import profileState from "recoil/atoms/profileState";
 
 import Loading from "pages/loading";
 import XCircle from "components/XCircle";
 import CheckCircle from "components/CheckCircle";
 
-import { ProfileData } from "types/index";
-
-import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
-import profileState from "recoil/atoms/profileState";
-
 const Users: NextPage = () => {
-  const token = useRecoilValue(tokenState);
   const profileValue = useRecoilValue(profileState);
 
-  const fetcher = (url: string): Promise<ProfileData> =>
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) =>
-      res.json()
-    );
+  // ログインユーザー（自分）以外のユーザーをランダムで一人取得
+  const { user, isLoading, isError } = UserFetcher.getRandomUser();
 
-  const { data, error } = useSWR("http://localhost:3000/api/v1/users", fetcher);
-
-  if (error) return <div>An error has occurred.</div>;
-  if (!data) return <Loading />;
+  if (isLoading) return <Loading />;
+  if (isError) return <div>An error has occurred.</div>;
 
   return (
     <div>
-      {profileValue ? (
+      {user && user.profile && profileValue ? (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100">
           <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
             <div className="m-10">
               <Image
-                src="/113120.jpeg"
+                src={user.profile.image?.url!}
                 alt="サンプル画像"
                 width={300}
                 height={300}
                 className="rounded-full object-cover"
               />
             </div>
-            <h2 className="mb-4 text-4xl">{data.nickname}</h2>
+            <h2 className="mb-4 text-4xl">{user.profile.nickname}</h2>
             <div className="flex gap-3">
-              <div>{data.game_category}</div>
-              <div>{data.game_rank}</div>
+              <div>{user.profile.game_category}</div>
+              <div>{user.profile.game_rank}</div>
             </div>
             <div className="mt-40 flex gap-8">
               <button>
                 <XCircle size={60} />
               </button>
+
               <button>
                 <CheckCircle size={60} />
               </button>
             </div>
           </div>
         </div>
-      ) : !token ? (
-        <Loading />
       ) : (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h1 className="text-3xl">初めにプロフィール作成してください</h1>
