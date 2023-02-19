@@ -10,10 +10,6 @@ import Layout from "components/Layout";
 const ChatRooms: NextPage = () => {
   const { chat_rooms, isLoading, isError } = ChatRoomFetcher.getChatRooms();
 
-  const getValue = () => {
-    console.log(chat_rooms);
-  };
-
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
 
@@ -28,7 +24,7 @@ const ChatRooms: NextPage = () => {
               className="flex w-1/2 flex-col divide-y divide-gray-200"
             >
               <Link href={`/users/${chat_room.other_user.id}`}>
-                <div className="m-4 flex gap-6 rounded-2xl bg-white p-8">
+                <div className="m-4 flex cursor-pointer gap-6 rounded-2xl bg-white p-8">
                   <Image
                     src={chat_room.other_user_profile.image?.url!}
                     alt="サンプル画像"
@@ -47,7 +43,6 @@ const ChatRooms: NextPage = () => {
               </Link>
             </div>
           ))}
-          <button onClick={() => getValue()}>console</button>
         </div>
       ) : (
         <div className="flex h-screen w-screen items-center justify-center">
