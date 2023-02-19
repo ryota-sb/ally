@@ -1,17 +1,39 @@
 import { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import UserFetcher from "hooks/api/user";
 
 import { useRecoilValue } from "recoil";
 import profileState from "recoil/atoms/profileState";
+import tokenState from "recoil/atoms/tokenState";
+import userState from "recoil/atoms/userState";
 
 import Loading from "pages/loading";
 import XCircle from "components/XCircle";
 import CheckCircle from "components/CheckCircle";
 
+import { Like } from "types";
+
 const Users: NextPage = () => {
+  const token = useRecoilValue(tokenState);
+  const currentUser = useRecoilValue(userState);
   const profileValue = useRecoilValue(profileState);
+
+  const createLike = async () => {
+    const response = await fetch("http://localhost:3000/api/v1/likes", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from_user_id: currentUser.id,
+        to_user_id: user?.profile?.user_id,
+      }),
+    });
+    const data: Like = await response.json();
+  };
 
   // ログインユーザー（自分）以外のユーザーをランダムで一人取得
   const { user, isLoading, isError } = UserFetcher.getRandomUser();
@@ -22,6 +44,7 @@ const Users: NextPage = () => {
   return (
     <div>
       {user && user.profile && profileValue ? (
+        // プロフィールが登録されている場合の表示
         <div className="flex h-screen w-full items-center justify-center bg-gray-100">
           <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
             <div className="m-10">
@@ -43,13 +66,14 @@ const Users: NextPage = () => {
                 <XCircle size={60} />
               </button>
 
-              <button>
+              <button onClick={() => createLike()}>
                 <CheckCircle size={60} />
               </button>
             </div>
           </div>
         </div>
       ) : (
+        // プロフィールが登録されていない場合の表示
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h1 className="text-3xl">初めにプロフィール作成してください</h1>
           <button className="m-10">
