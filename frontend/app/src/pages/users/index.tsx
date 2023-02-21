@@ -13,14 +13,22 @@ import Loading from "pages/loading";
 import XCircle from "components/XCircle";
 import CheckCircle from "components/CheckCircle";
 
-import { Like } from "types";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { Like, User } from "types";
 
 const Users: NextPage = () => {
+  const router = useRouter();
+
   const token = useRecoilValue(tokenState);
   const currentUser = useRecoilValue(userState);
   const profileValue = useRecoilValue(profileState);
 
-  const createLike = async () => {
+  // ログインユーザー（自分）以外のユーザーをランダムで一人取得
+  const { user, isLoading, isError } = UserFetcher.getRandomUser();
+
+  const createLike = async (user: User, is_like: boolean) => {
     const response = await fetch("http://localhost:3000/api/v1/likes", {
       method: "POST",
       headers: {
@@ -30,13 +38,17 @@ const Users: NextPage = () => {
       body: JSON.stringify({
         from_user_id: currentUser.id,
         to_user_id: user?.profile?.user_id,
+        is_like: is_like,
       }),
     });
     const data: Like = await response.json();
+    is_like
+      ? toast.success(`${user.profile?.nickname} をいいねしました!!`)
+      : toast.success(`次のユーザーを表示します...`);
+    setTimeout(() => {
+      router.reload();
+    }, 2000);
   };
-
-  // ログインユーザー（自分）以外のユーザーをランダムで一人取得
-  const { user, isLoading, isError } = UserFetcher.getRandomUser();
 
   if (isLoading) return <Loading />;
   if (isError) return <div>An error has occurred.</div>;
@@ -62,11 +74,11 @@ const Users: NextPage = () => {
               <div>{user.profile.game_rank}</div>
             </div>
             <div className="mt-40 flex gap-8">
-              <button>
+              <button onClick={() => createLike(user, false)}>
                 <XCircle size={60} />
               </button>
 
-              <button onClick={() => createLike()}>
+              <button onClick={() => createLike(user, true)}>
                 <CheckCircle size={60} />
               </button>
             </div>
