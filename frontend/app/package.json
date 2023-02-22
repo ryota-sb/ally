@@ -8,8 +8,10 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.10.2",
     "@headlessui/react": "^1.7.11",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/recoil": "^0.0.9",
     "axios": "^0.27.2",
+    "jsonwebtoken": "^9.0.0",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0",
