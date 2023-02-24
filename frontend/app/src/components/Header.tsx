@@ -4,11 +4,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "components/Logout";
 
 import { useRecoilValue } from "recoil";
-import profileState from "recoil/atoms/profileState";
+import userState from "recoil/atoms/userState";
 
 const Header: FC = () => {
   const { isAuthenticated } = useAuth0();
-  const profileValue = useRecoilValue(profileState);
+  const currentUser = useRecoilValue(userState);
 
   return (
     <div className="bg-white shadow dark:bg-gray-800">
@@ -33,7 +33,7 @@ const Header: FC = () => {
                     探す
                   </a>
                   <a
-                    href={`/profiles/${profileValue.id}`}
+                    href={`/users/${currentUser.id}`}
                     className="mx-2 mt-2 transform rounded-md px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 md:mt-0"
                   >
                     プロフィール

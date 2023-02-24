@@ -95,7 +95,7 @@ const ProfileForm = (props: Props) => {
     );
     const data: ProfileData = await response.json();
     setProfileValue(data);
-    router.push(`/profiles/${id}`);
+    router.push(`/users/${id}`);
   };
 
   return (
