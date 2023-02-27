@@ -3,8 +3,8 @@ require 'auth0'
 # Auth0クライアントのインスタンス作成
 auth0_client = Auth0Client.new(
   domain: ENV['AUTH0_DOMAIN'],
-  client_id: ENV['AUTH0_API_EXPLORER_CLIENT_ID'],
-  client_secret: ENV['AUTH0_API_EXPLORER_CLIENT_SECRET']
+  client_id: ENV['AUTH0_API_CLIENT_ID'],
+  client_secret: ENV['AUTH0_API_CLIENT_SECRET']
 )
 
 # Auth0に存在する登録済みのユーザーを全て取得
