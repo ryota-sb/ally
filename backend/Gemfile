@@ -11,6 +11,7 @@ gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'jwt'
 gem 'carrierwave'
+gem 'auth0'
 
 group :development, :test do
   gem 'pry-byebug'
