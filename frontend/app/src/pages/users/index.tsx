@@ -4,15 +4,21 @@ import { useRouter } from "next/router";
 
 import UserFetcher from "hooks/api/user";
 
+// Recoil
 import { useRecoilValue } from "recoil";
 import profileState from "recoil/atoms/profileState";
 import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 
-import Loading from "pages/loading";
-import XCircle from "components/XCircle";
-import CheckCircle from "components/CheckCircle";
+// SVG Icon Components
+import XCircle from "components/svg_icons/XCircle";
+import CheckCircle from "components/svg_icons/CheckCircle";
+import Female from "components/svg_icons/female";
+import Male from "components/svg_icons/Male";
 
+import Loading from "pages/loading";
+
+// Toastify
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -55,7 +61,7 @@ const Users: NextPage = () => {
 
   return (
     <div>
-      {user && user.profile && profileValue ? (
+      {user && user.profile ? (
         // プロフィールが登録されている場合の表示
         <div className="flex h-screen w-full items-center justify-center bg-gray-100">
           <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
@@ -68,7 +74,14 @@ const Users: NextPage = () => {
                 className="rounded-full object-cover"
               />
             </div>
-            <h2 className="mb-4 text-4xl">{user.profile.nickname}</h2>
+            <div className="mb-4 flex items-center gap-2">
+              <h2 className=" text-4xl">{user.profile.nickname}</h2>
+              {user.profile.gender == "man" ? (
+                <Male size={30} />
+              ) : (
+                <Female size={30} />
+              )}
+            </div>
             <div className="flex gap-3">
               <div>{user.profile.game_category}</div>
               <div>{user.profile.game_rank}</div>
