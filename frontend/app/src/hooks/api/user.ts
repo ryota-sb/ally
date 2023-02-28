@@ -13,7 +13,9 @@ class UserFetcher {
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()
-        )
+        ),
+      // ページタブ移動、またはページフォーカスした際にデータを再検証しないように設定
+      { revalidateOnFocus: false, revalidateOnReconnect: false }
     );
 
     return {
