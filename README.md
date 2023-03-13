@@ -1,21 +1,13 @@
 # Ally
 
-ゲームを一緒にする仲間を探すマッチングアプリ。
+ゲームを一緒にする仲間を探すマッチングアプリケーション
 
-## 環境
+## README
 
-### Frontend
+### Frontend [README.md](/frontend/README.md)
 
-- Next.js
-- TypeScript
-- TailwindCSS
-- Vercel
+### Backend [README.md](/backend/README.md)
 
-### Backend
+## DB
 
-- Rails API
-- Render
-
-### DB
-
-- PostgreSQL
+### PostgreSQL
