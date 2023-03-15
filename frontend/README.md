@@ -1,28 +1,15 @@
 # Frontend Project
 
+## 使用技術
+
 - Next.js
-- node16
-- TypeScript
-- TailwindCSS
+- node 16.19.1
+- TypeScript 4.7.2
+- TailwindCSS 3.1.2
 
-## Auth0 ライブラリ
+## 使用ライブラリ
 
-```bash
-yarn add @auth0/auth0-react
-```
-
-## Store
-
-Recoil（React 用状態管理ライブラリ）
-
-```bash
-yarn add recoil
-```
-
-## TailwindCSS Plugin
-
-アニメーションディレイ
-
-```bash
-npm install tailwindcss-animation-delay
-```
+- React Hook Form 7.36.1
+- SRW 2.0.0
+- Recoil 0.7.4
+- auth0-react 1.10.2

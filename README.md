@@ -10,4 +10,4 @@
 
 ## DB
 
-### PostgreSQL
+#### PostgreSQL 15.0
