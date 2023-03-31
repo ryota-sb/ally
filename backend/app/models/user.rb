@@ -11,6 +11,9 @@ class User < ApplicationRecord
 
   has_many :messages
 
+  scope :excluding_user, ->(user) { where.not(id: user.id) } # 利用者（ログインユーザー）以外を取得
+  scope :unliked_by, ->(user) { excluding_user(user).where.not(id: user.likes_from.select(:to_user_id)) } # 利用者がlikeしていないユーザーを取得
+
   def self.from_token_payload(payload)
     find_by(sub: payload['sub']) || create!(sub: payload['sub'])
   end
