@@ -11,3 +11,7 @@
 ## DB
 
 #### PostgreSQL 15.0
+
+## ER 図
+
+![image](/images/db_er.png)
