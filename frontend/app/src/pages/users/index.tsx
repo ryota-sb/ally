@@ -2,18 +2,20 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+import { useEffect } from "react";
+
+// Custom SWR
 import UserFetcher from "hooks/api/user";
 
 // Recoil
 import { useRecoilValue } from "recoil";
-import profileState from "recoil/atoms/profileState";
 import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 
 // SVG Icon Components
 import XCircle from "components/svg_icons/XCircle";
 import CheckCircle from "components/svg_icons/CheckCircle";
-import Female from "components/svg_icons/female";
+import Female from "components/svg_icons/Female";
 import Male from "components/svg_icons/Male";
 
 import Loading from "pages/loading";
@@ -25,16 +27,32 @@ import "react-toastify/dist/ReactToastify.css";
 import { Like, User } from "types";
 
 const Users: NextPage = () => {
+  // コンソールでデータ取得確認
+  useEffect(() => {
+    console.log(otherUser);
+    console.log(currentUser);
+  });
+
   const router = useRouter();
 
   const token = useRecoilValue(tokenState);
-  const currentUser = useRecoilValue(userState);
-  const profileValue = useRecoilValue(profileState);
+  const user = useRecoilValue(userState);
 
   // ログインユーザー（自分）以外のユーザーをランダムで一人取得
-  const { user, isLoading, isError } = UserFetcher.getRandomUser();
+  const {
+    otherUser,
+    isLoading: isRandomUserLoading,
+    isError: isRandomUserError,
+  } = UserFetcher.getRandomUser();
 
-  const createLike = async (user: User, is_like: boolean) => {
+  // ログインユーザーのデータ取得
+  const {
+    user: currentUser,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = UserFetcher.getUser(user.id);
+
+  const createLike = async (other_user: User, is_like: boolean) => {
     const response = await fetch("http://localhost:3000/api/v1/likes", {
       method: "POST",
       headers: {
@@ -42,32 +60,33 @@ const Users: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from_user_id: currentUser.id,
-        to_user_id: user?.profile?.user_id,
+        from_user_id: user.id,
+        to_user_id: other_user.profile?.user_id,
         is_like: is_like,
       }),
     });
     const data: Like = await response.json();
     is_like
-      ? toast.success(`${user.profile?.nickname} をいいねしました!!`)
+      ? toast.success(`${other_user.profile?.nickname} をいいねしました!!`)
       : toast.success(`次のユーザーを表示します...`);
     setTimeout(() => {
       router.reload();
     }, 2000);
   };
 
-  if (isLoading) return <Loading />;
-  if (isError) return <div>An error has occurred.</div>;
+  if (isRandomUserLoading && isUserLoading) return <Loading />;
+  if (isRandomUserError) return <div>Error fetching random user data</div>;
+  if (isUserError) return <div>Error fetching user data</div>;
 
   return (
     <div>
-      {user && user.profile ? (
+      {currentUser && otherUser?.profile ? (
         // プロフィールが登録されている場合の表示
         <div className="flex h-screen w-full items-center justify-center bg-gray-100">
           <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
             <div className="m-10">
               <Image
-                src={user.profile.image?.url!}
+                src={otherUser.profile.image?.url!}
                 alt="サンプル画像"
                 width={300}
                 height={300}
@@ -75,23 +94,23 @@ const Users: NextPage = () => {
               />
             </div>
             <div className="mb-4 flex items-center gap-2">
-              <h2 className=" text-4xl">{user.profile.nickname}</h2>
-              {user.profile.gender == "man" ? (
+              <h2 className=" text-4xl">{otherUser.profile.nickname}</h2>
+              {otherUser.profile.gender == "man" ? (
                 <Male size={30} />
               ) : (
                 <Female size={30} />
               )}
             </div>
             <div className="flex gap-3">
-              <div>{user.profile.game_category}</div>
-              <div>{user.profile.game_rank}</div>
+              <div>{otherUser.profile.game_category}</div>
+              <div>{otherUser.profile.game_rank}</div>
             </div>
             <div className="mt-40 flex gap-8">
-              <button onClick={() => createLike(user, false)}>
+              <button onClick={() => createLike(otherUser, false)}>
                 <XCircle size={60} />
               </button>
 
-              <button onClick={() => createLike(user, true)}>
+              <button onClick={() => createLike(otherUser, true)}>
                 <CheckCircle size={60} />
               </button>
             </div>

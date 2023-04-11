@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^1.10.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.11",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/recoil": "^0.0.9",
@@ -20,6 +22,7 @@
     "recoil": "^0.7.4",
     "recoil-persist": "^4.2.0",
     "swr": "^2.0.0",
+    "tabler-icons-react": "^1.56.0",
     "tailwindcss-animation-delay": "^1.0.7"
   },
   "devDependencies": {

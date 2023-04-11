@@ -1,5 +1,6 @@
 class Api::V1::ProfilesController < ApplicationController
   
+  # POST /api/v1/porofiles
   def create
     profile = Profile.new(profile_params)
     profile.user_id = @current_user.id
@@ -11,6 +12,7 @@ class Api::V1::ProfilesController < ApplicationController
     end
   end
 
+  # PATCH /api/v1/profiles/:id
   def update
     profile = Profile.find(params[:id])
     if profile.update(profile_params)

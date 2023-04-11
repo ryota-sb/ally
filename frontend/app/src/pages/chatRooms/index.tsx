@@ -8,17 +8,17 @@ import Loading from "pages/loading";
 import Layout from "components/Layout";
 
 const ChatRooms: NextPage = () => {
-  const { chat_rooms, isLoading, isError } = ChatRoomFetcher.getChatRooms();
+  const { chatRooms, isLoading, isError } = ChatRoomFetcher.getChatRooms();
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
 
   return (
     <Layout>
-      {chat_rooms && chat_rooms.length > 0 ? (
+      {chatRooms && chatRooms.length > 0 ? (
         <div className="flex min-h-screen flex-col items-center bg-gray-100">
           <h1 className="p-10 text-4xl">Chat Rooms</h1>
-          {chat_rooms.map((chat_room) => (
+          {chatRooms.map((chat_room) => (
             <div
               key={chat_room.chat_room.id}
               className="flex w-1/2 flex-col divide-y divide-gray-200"

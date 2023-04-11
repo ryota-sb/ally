@@ -9,17 +9,16 @@ class UserFetcher {
   static getRandomUser() {
     const token = useRecoilValue(tokenState);
     const { data, error } = useSWR<User>(
-      "http://localhost:3000/api/v1/random_user_with_profile",
+      `http://localhost:3000/api/v1/random_user_with_profile`,
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()
         ),
-      // ページタブ移動、またはページフォーカスした際にデータを再検証しないように設定
-      { revalidateOnFocus: false, revalidateOnReconnect: false }
+      { revalidateOnFocus: false, revalidateOnReconnect: false } // ページタブ移動、またはページフォーカスした際にデータを再検証しないように設定
     );
 
     return {
-      user: data,
+      otherUser: data,
       isLoading: !error && !data,
       isError: error,
     };
