@@ -8,10 +8,10 @@ auth0_client = Auth0Client.new(
 )
 
 # Auth0に存在する登録済みのユーザーを全て取得
-users = auth0_client.users
+auth_users = auth0_client.users
 
 # Auth0の必要な情報のみを抽出して取得
-users_data = users.map do |user|
+users_data = auth_users.map do |user|
   {
     sub: user['user_id'],
     nickname: user['nickname'],
@@ -37,7 +37,7 @@ users_data.each do |user_data|
     return image_urls.sample
   end
 
-  # ユーザーごとにプロフィールを作成
+  # ユーザープロフィールを作成
   user.create_profile!(
     nickname: user_data[:nickname],
     gender: ["man", "woman"].sample,
@@ -47,4 +47,13 @@ users_data.each do |user_data|
     image: File.open(get_images_path()),
     user_id: user[:id]
   )
+
+  users_except_current = User.where.not(id: user.id)
+  users_except_current.each do |other_user|
+    Like.create!(
+      from_user_id: user.id,
+      to_user_id: other_user.id,
+      is_like: [true, false].sample
+    )
+  end
 end
