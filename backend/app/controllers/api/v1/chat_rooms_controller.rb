@@ -1,6 +1,4 @@
 class Api::V1::ChatRoomsController < ApplicationController
-  before_action :set_chat_room, only: :show
-
   def index
     chat_rooms = []
 
@@ -17,15 +15,11 @@ class Api::V1::ChatRoomsController < ApplicationController
   end
 
   def show
+    chat_room = ChatRoom.find(params[:id])
     other_user = chat_room.users.where.not(id: @current_user.id)[0]
+    other_user_profile = other_user.profile
     messages = chat_room.messages.order("created_at ASC")
 
-    render json: { status: 200, other_user: other_user, messages: messages }
-  end
-
-  private
-
-  def set_chat_room
-    chat_room = ChatRoom.fing(params[:id])
+    render json: { status: 200, other_user: other_user, other_user_profile: other_user_profile, messages: messages }
   end
 end
