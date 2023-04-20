@@ -23,7 +23,7 @@ const ChatRooms: NextPage = () => {
               key={chat_room.chat_room.id}
               className="flex w-1/2 flex-col divide-y divide-gray-200"
             >
-              <Link href={`/users/${chat_room.other_user.id}`}>
+              <Link href={`/chatRooms/${chat_room.chat_room.id}`}>
                 <div className="m-4 flex cursor-pointer gap-6 rounded-2xl bg-white p-8">
                   <Image
                     src={chat_room.other_user_profile.image?.url!}
