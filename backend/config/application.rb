@@ -21,5 +21,6 @@ module App
     config.api_only = true
     config.time_zone = "Asia/Tokyo"
     config.active_record.default_timezone = :local
+    config.encoding = "utf-8"
   end
 end
