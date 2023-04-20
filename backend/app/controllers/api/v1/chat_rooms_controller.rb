@@ -1,4 +1,6 @@
 class Api::V1::ChatRoomsController < ApplicationController
+
+  # GET /api/v1/chat_rooms
   def index
     chat_rooms = []
 
@@ -14,6 +16,7 @@ class Api::V1::ChatRoomsController < ApplicationController
     render json: chat_rooms
   end
 
+  # GET /api/v1/chat_rooms/:id
   def show
     chat_room = ChatRoom.find(params[:id])
     other_user = chat_room.users.where.not(id: @current_user.id)[0]

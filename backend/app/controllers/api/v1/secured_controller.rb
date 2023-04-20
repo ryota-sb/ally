@@ -1,4 +1,6 @@
 class Api::V1::SecuredController < ApplicationController
+
+  # GET /api/v1/login
   def login
     render json: {
       status: 200,
@@ -8,6 +10,7 @@ class Api::V1::SecuredController < ApplicationController
     }
   end
 
+  # GET /api/v1/logout
   def logout
     render json: {
       status: 200,
