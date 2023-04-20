@@ -1,33 +1,28 @@
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
-
-// react hook form
-import { useForm, SubmitHandler } from "react-hook-form";
 
 // Custom SWR
 import ChatRoomFetcher from "hooks/api/chat_room";
 
-import { Message, MessageInputs, ChatRoomData } from "types";
+// types
+import { ChatRoomData } from "types";
 
+// Components and pages
+import MessageForm from "components/MessageForm";
 import Layout from "components/Layout";
 import Loading from "pages/loading";
 
-// FontAwesome Icon
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-
 // サーバーサイトでURLパラメータに含まれるID部分を取得（クライアントサイドでは、ページリロードすると値を維持できないため）
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const chatRoomId = context.query.id;
   return {
-    props: { id },
+    props: { chatRoomId },
   };
 };
 
 // ページコンポーネントに値を渡すための型定義
 type Props = {
-  id: number;
+  chatRoomId: number;
 };
 
 // useSWRで取得したデータの型
@@ -37,22 +32,9 @@ type ChatRoomFetchData = {
   isError: boolean;
 };
 
-const ChatRoom: NextPage<Props> = ({ id }) => {
-  const router = useRouter();
-
+const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
   const { chatRoom, isLoading, isError }: ChatRoomFetchData =
-    ChatRoomFetcher.getChatRoom(id);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<MessageInputs>({
-    mode: "onChange",
-    defaultValues: { content: "" },
-  });
-
-  const onSubmit: SubmitHandler<Message> = () => {};
+    ChatRoomFetcher.getChatRoom(chatRoomId);
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
@@ -91,7 +73,7 @@ const ChatRoom: NextPage<Props> = ({ id }) => {
                 OtherUser: Hello World
                 {chatRoom?.other_user_profile.nickname}
               </h1>
-            </div> */}
+              </div> */}
               <div className="flex justify-end">
                 <h1 className="m-2 rounded-md bg-indigo-200 p-2">
                   CurrentUser: Hello World
@@ -103,17 +85,7 @@ const ChatRoom: NextPage<Props> = ({ id }) => {
                 </h1>
               </div>
             </div>
-            <form className="w-full">
-              <div className="flex">
-                <input
-                  type="text"
-                  className="flex-1 rounded-b-lg border-2 py-2 px-4 focus:border-indigo-200 focus:outline-none"
-                />
-                <button className="bg-indigo-200 px-4">
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                </button>
-              </div>
-            </form>
+            <MessageForm id={chatRoomId} />
           </div>
         </div>
       )}
