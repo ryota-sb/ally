@@ -4,6 +4,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 // types
 import { Message, MessageInputs } from "types";
 
+// BasePath
+import getBasePath from "lib/getBasePath";
+
 // Recoil
 import { useRecoilValue } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
@@ -30,7 +33,7 @@ const MessageForm = (props: ComponentProps) => {
   });
 
   const createMessage = async (messageInputData: MessageInputs) => {
-    const response = await fetch("http://localhost:3000/api/v1/messages", {
+    const response = await fetch(`${getBasePath()}/api/v1/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
