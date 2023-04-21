@@ -33,6 +33,11 @@ type ChatRoomFetchData = {
 };
 
 const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
+  // CurrentUserのメッセージならtrueを返す
+  const isCurrentUserMessage = (messageUserId: number) => {
+    return chatRoom?.other_user.id !== messageUserId;
+  };
+
   const { chatRoom, isLoading, isError }: ChatRoomFetchData =
     ChatRoomFetcher.getChatRoom(chatRoomId);
 
@@ -49,41 +54,29 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
             </h1>
             <div style={{ height: 900 }} className="w-full bg-white p-4">
               {chatRoom.messages.map((message) => (
-                <div className="flex justify-start">
-                  <Image
-                    src={chatRoom?.other_user_profile.image?.url!}
-                    width={60}
-                    height={60}
-                    className="rounded-full object-cover"
-                  />
-                  <h1 className="m-2 rounded-md bg-gray-200 p-2">
-                    {message.content}
-                    {chatRoom.other_user_profile.nickname}
-                  </h1>
+                <div>
+                  {isCurrentUserMessage(message.user_id) ? (
+                    <div className="flex justify-end">
+                      <h1 className="m-2 rounded-md bg-indigo-200 p-2">
+                        {message.content}
+                      </h1>
+                    </div>
+                  ) : (
+                    <div className="flex justify-start">
+                      <Image
+                        src={chatRoom?.other_user_profile.image?.url!}
+                        width={60}
+                        height={60}
+                        className="rounded-full object-cover"
+                      />
+                      <h1 className="m-2 rounded-md bg-gray-200 p-2">
+                        {message.content}
+                        {chatRoom.other_user_profile.nickname}
+                      </h1>
+                    </div>
+                  )}
                 </div>
               ))}
-              {/* <div className="flex justify-start">
-              <Image
-                src={chatRoom?.other_user_profile.image?.url!}
-                width={60}
-                height={60}
-                className="rounded-full object-cover"
-              />
-              <h1 className="m-2 rounded-md bg-gray-200 p-2">
-                OtherUser: Hello World
-                {chatRoom?.other_user_profile.nickname}
-              </h1>
-              </div> */}
-              <div className="flex justify-end">
-                <h1 className="m-2 rounded-md bg-indigo-200 p-2">
-                  CurrentUser: Hello World
-                </h1>
-              </div>
-              <div className="flex justify-end">
-                <h1 className="m-2 rounded-md bg-indigo-200 p-2">
-                  CurrentUser: Hello World
-                </h1>
-              </div>
             </div>
             <MessageForm id={chatRoomId} />
           </div>
