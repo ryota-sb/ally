@@ -57,7 +57,6 @@ const MessageForm = (props: Props) => {
   const onSubmit: SubmitHandler<MessageInputs> = (messageInputData) => {
     createMessage(messageInputData);
     reset();
-    console.log("メッセージを送信しました"); // 確認用なので消す
   };
 
   return (
