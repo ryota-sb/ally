@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Custom SWR
-import ChatRoomFetcher from "hooks/api/chat_room";
+import { getChatRooms } from "hooks/api/chat_room";
 
 // Components and pages
 import Loading from "pages/loading";
 import Layout from "components/Layout";
 
 const ChatRooms: NextPage = () => {
-  const { chatRooms, isLoading, isError } = ChatRoomFetcher.getChatRooms();
+  const { chatRooms, isLoading, isError } = getChatRooms();
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
