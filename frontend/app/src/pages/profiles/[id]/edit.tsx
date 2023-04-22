@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 // Custom SWR
-import UserFetcher from "hooks/api/user";
+import { getUser } from "hooks/api/user";
 
 // types
 import { User, ProfileData, ProfileInputs } from "types";
@@ -24,7 +24,7 @@ const Edit: NextPage<Props> = () => {
   const router = useRouter();
   const currentUser: User = useRecoilValue(userState);
 
-  const { user, isLoading, isError } = UserFetcher.getUser(currentUser.id);
+  const { user, isLoading, isError } = getUser(currentUser.id);
 
   // フォームの初期値
   const defaultValues: ProfileInputs = {

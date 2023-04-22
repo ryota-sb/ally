@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 // Custom SWR
-import UserFetcher from "hooks/api/user";
+import { getRandomUser, getUser } from "hooks/api/user";
 
 // types
 import { Like, User } from "types";
@@ -48,14 +48,14 @@ const Users: NextPage = () => {
     otherUser,
     isLoading: isRandomUserLoading,
     isError: isRandomUserError,
-  } = UserFetcher.getRandomUser();
+  } = getRandomUser();
 
   // ログインユーザーのデータ取得
   const {
     user: currentUser,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = UserFetcher.getUser(user.id);
+  } = getUser(user.id);
 
   const createLike = async (other_user: User, is_like: boolean) => {
     const response = await fetch(`${getBasePath()}/api/v1/likes`, {

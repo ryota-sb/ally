@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Custom SWR
-import UserFetcher from "hooks/api/user";
+import { getUser } from "hooks/api/user";
 
 // types
 import { User } from "types";
@@ -22,7 +22,7 @@ const Profile: NextPage = () => {
 
   const currentUser: User = useRecoilValue(userState);
 
-  const { user, isLoading, isError } = UserFetcher.getUser(currentUser.id);
+  const { user, isLoading, isError } = getUser(currentUser.id);
 
   if (isLoading) return <Loading />;
   if (isError) return <div>An error has occurred.</div>;
