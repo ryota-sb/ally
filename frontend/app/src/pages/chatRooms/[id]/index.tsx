@@ -2,10 +2,13 @@ import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
 // Custom SWR
-import ChatRoomFetcher from "hooks/api/chat_room";
+import { getChatRoom } from "hooks/api/chat_room";
 
-// types
+// type
 import { ChatRoomData } from "types";
+
+// swr type
+import { KeyedMutator } from "swr";
 
 // Components and pages
 import MessageForm from "components/MessageForm";
@@ -30,6 +33,7 @@ type ChatRoomFetchData = {
   chatRoom?: ChatRoomData;
   isLoading: boolean;
   isError: boolean;
+  mutate: KeyedMutator<ChatRoomData>;
 };
 
 const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
@@ -38,8 +42,8 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
     return chatRoom?.other_user.id !== messageUserId;
   };
 
-  const { chatRoom, isLoading, isError }: ChatRoomFetchData =
-    ChatRoomFetcher.getChatRoom(chatRoomId);
+  const { chatRoom, isLoading, isError, mutate }: ChatRoomFetchData =
+    getChatRoom(chatRoomId);
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
@@ -53,8 +57,8 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
               {chatRoom.other_user_profile.nickname}
             </h1>
             <div style={{ height: 900 }} className="w-full bg-white p-4">
-              {chatRoom.messages.map((message) => (
-                <div>
+              {chatRoom.messages.map((message, index) => (
+                <div key={index}>
                   {isCurrentUserMessage(message.user_id) ? (
                     <div className="flex justify-end">
                       <h1 className="m-2 rounded-md bg-indigo-200 p-2">
@@ -78,7 +82,7 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
                 </div>
               ))}
             </div>
-            <MessageForm id={chatRoomId} />
+            <MessageForm id={chatRoomId} mutate={mutate} />
           </div>
         </div>
       )}

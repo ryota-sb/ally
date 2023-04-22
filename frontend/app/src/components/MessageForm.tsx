@@ -2,7 +2,10 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 
 // types
-import { Message, MessageInputs } from "types";
+import { Message, MessageInputs, ChatRoomData } from "types";
+
+// swr type
+import { KeyedMutator } from "swr";
 
 // BasePath
 import getBasePath from "lib/getBasePath";
@@ -15,11 +18,12 @@ import tokenState from "recoil/atoms/tokenState";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-type ComponentProps = {
+type Props = {
   id: number;
+  mutate: KeyedMutator<ChatRoomData>;
 };
 
-const MessageForm = (props: ComponentProps) => {
+const MessageForm = (props: Props) => {
   const token = useRecoilValue(tokenState);
 
   const {
@@ -47,6 +51,7 @@ const MessageForm = (props: ComponentProps) => {
       }),
     });
     const data: Message = await response.json();
+    props.mutate();
   };
 
   const onSubmit: SubmitHandler<MessageInputs> = (messageInputData) => {
