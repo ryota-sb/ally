@@ -7,6 +7,12 @@ import { useEffect } from "react";
 // Custom SWR
 import UserFetcher from "hooks/api/user";
 
+// types
+import { Like, User } from "types";
+
+// BasePath
+import getBasePath from "lib/getBasePath";
+
 // Recoil
 import { useRecoilValue } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
@@ -18,13 +24,12 @@ import CheckCircle from "components/svg_icons/CheckCircle";
 import Female from "components/svg_icons/Female";
 import Male from "components/svg_icons/Male";
 
+// pages
 import Loading from "pages/loading";
 
 // Toastify
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { Like, User } from "types";
 
 const Users: NextPage = () => {
   // コンソールでデータ取得確認
@@ -53,7 +58,7 @@ const Users: NextPage = () => {
   } = UserFetcher.getUser(user.id);
 
   const createLike = async (other_user: User, is_like: boolean) => {
-    const response = await fetch("http://localhost:3000/api/v1/likes", {
+    const response = await fetch(`${getBasePath()}/api/v1/likes`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

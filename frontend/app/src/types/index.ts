@@ -1,3 +1,12 @@
+// ユーザーのデータ
+export type User = {
+  id: number;
+  sub: string;
+  createdAt: Date;
+  updatedAt: Date;
+  profile?: ProfileData;
+};
+
 // プロフィールのフォーム入力データ
 export type ProfileInputs = {
   nickname?: string;
@@ -16,31 +25,29 @@ export type ProfileData = ProfileInputs & {
   updatedAt: Date;
 };
 
-// ユーザー情報
-export type User = {
-  id: number;
-  sub: string;
-  createdAt: Date;
-  updatedAt: Date;
-  profile?: ProfileData;
-};
-
+// ライクのデータ
 export type Like = {
   id?: number;
   form_user_id: number | undefined | null;
   to_user_id: number | undefined | null;
 };
 
-export type ChatRoom = {
+// チャットルームのデータ
+export type ChatRoomData = {
   chat_room: { id: number };
   other_user: User;
   other_user_profile: ProfileData;
-  last_message: Message;
+  messages: Message[];
 };
 
-export type Message = {
+// メッセージのフォーム入力データ
+export type MessageInputs = {
+  content: string;
+};
+
+// メッセージのデータ
+export type Message = MessageInputs & {
   user_id: number;
   chat_room_id: number;
-  content: string;
   created_at: Date;
 };

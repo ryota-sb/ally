@@ -1,6 +1,13 @@
+// SWR
 import useSWR from "swr";
+
+// BasePath
+import getBasePath from "lib/getBasePath";
+
+// types
 import { User } from "types";
 
+// Recoil
 import { useRecoilValue } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 
@@ -9,7 +16,7 @@ class UserFetcher {
   static getRandomUser() {
     const token = useRecoilValue(tokenState);
     const { data, error } = useSWR<User>(
-      `http://localhost:3000/api/v1/random_user_with_profile`,
+      `${getBasePath()}/api/v1/random_user_with_profile`,
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()
@@ -28,7 +35,7 @@ class UserFetcher {
   static getUser(id: number) {
     const token = useRecoilValue(tokenState);
     const { data, error } = useSWR<User>(
-      `http://localhost:3000/api/v1/users/${id}`,
+      `${getBasePath()}/api/v1/users/${id}`,
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()

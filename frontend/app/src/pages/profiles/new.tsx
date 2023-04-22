@@ -1,12 +1,16 @@
 import { NextPage } from "next";
 
-import { ProfileData, ProfileInputs } from "types/index";
+// types
+import { ProfileData, ProfileInputs } from "types";
 
+// Recoil
 import { useRecoilValue } from "recoil";
 import profileState from "recoil/atoms/profileState";
 
+// Client Side execution
 import { useClient } from "hooks/useClient";
 
+// Components
 import Layout from "components/Layout";
 import ProfileForm from "components/ProfileForm";
 

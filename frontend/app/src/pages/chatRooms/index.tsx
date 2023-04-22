@@ -2,8 +2,10 @@ import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+// Custom SWR
 import ChatRoomFetcher from "hooks/api/chat_room";
 
+// Components and pages
 import Loading from "pages/loading";
 import Layout from "components/Layout";
 

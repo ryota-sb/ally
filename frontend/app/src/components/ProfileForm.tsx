@@ -2,9 +2,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import { ProfileData, ProfileInputs } from "../types/index";
+// React Hook Form
 import { useForm, SubmitHandler } from "react-hook-form";
 
+// types
+import { ProfileData, ProfileInputs } from "types";
+
+// BasePath
+import getBasePath from "lib/getBasePath";
+
+// Recoil
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 import profileState from "recoil/atoms/profileState";
@@ -77,10 +84,7 @@ const ProfileForm = (props: Props) => {
   // プロフィールを新規作成、ルートディレクトリへ遷移
   const createProfile = async (profileInputData: FormData) => {
     const config = setConfig("POST", profileInputData);
-    const response = await fetch(
-      "http://localhost:3000/api/v1/profiles",
-      config
-    );
+    const response = await fetch(`${getBasePath()}/api/v1/profiles`, config);
     const data: ProfileData = await response.json();
     setProfileValue(data);
     router.push("/");
@@ -90,7 +94,7 @@ const ProfileForm = (props: Props) => {
   const updateProfile = async (id: number, profileInputData: FormData) => {
     const config = setConfig("PUT", profileInputData);
     const response = await fetch(
-      `http://localhost:3000/api/v1/profiles/${id}`,
+      `${getBasePath()}/api/v1/profiles/${id}`,
       config
     );
     const data: ProfileData = await response.json();

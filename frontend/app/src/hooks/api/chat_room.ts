@@ -1,6 +1,13 @@
+// SWR
 import useSWR from "swr";
-import { ChatRoom } from "types";
 
+// BasePath
+import getBasePath from "lib/getBasePath";
+
+// types
+import { ChatRoomData } from "types";
+
+// Recoil
 import { useRecoilValue } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 
@@ -8,8 +15,8 @@ class ChatRoomFetcher {
   // 全てのチャットルーム取得
   static getChatRooms() {
     const token = useRecoilValue(tokenState);
-    const { data, error } = useSWR<ChatRoom[]>(
-      "http://localhost:3000/api/v1/chat_rooms",
+    const { data, error } = useSWR<ChatRoomData[]>(
+      `${getBasePath()}/api/v1/chat_rooms`,
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()
@@ -26,8 +33,8 @@ class ChatRoomFetcher {
   // 渡されたIDのチャットルームを取得
   static getChatRoom(id: number) {
     const token = useRecoilValue(tokenState);
-    const { data, error } = useSWR<ChatRoom>(
-      `http://localhost:3000/api/v1/chat_rooms/${id}`,
+    const { data, error } = useSWR<ChatRoomData>(
+      `${getBasePath()}/api/v1/chat_rooms/${id}`,
       (url) =>
         fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
           (res) => res.json()

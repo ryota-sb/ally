@@ -3,13 +3,17 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
+// Custom SWR
 import UserFetcher from "hooks/api/user";
 
-import { User } from "types/index";
+// types
+import { User } from "types";
 
+// Recoil
 import { useRecoilValue } from "recoil";
 import userState from "recoil/atoms/userState";
 
+// Components and pages
 import Loading from "pages/loading";
 import Layout from "components/Layout";
 

@@ -1,16 +1,20 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
+// Custom SWR
 import UserFetcher from "hooks/api/user";
 
-import { User, ProfileData, ProfileInputs } from "types/index";
+// types
+import { User, ProfileData, ProfileInputs } from "types";
 
+// Recoil
 import { useRecoilValue } from "recoil";
 import userState from "recoil/atoms/userState";
 
+// Compoents and pages
 import Layout from "components/Layout";
-import Loading from "pages/loading";
 import ProfileForm from "components/ProfileForm";
+import Loading from "pages/loading";
 
 type Props = {
   profile: ProfileData;
