@@ -23,7 +23,7 @@ type CustomLinkProps = {
 
 const CustomLink = ({ href, name }: CustomLinkProps) => {
   return (
-    <div className="mx-2 mt-2 transform rounded-md px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 md:mt-0">
+    <div className="mx-2 mt-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-300 md:mt-0">
       <Link href={href}>{name}</Link>
     </div>
   );
@@ -72,7 +72,7 @@ const Header: React.FC = () => {
               href={`/users/${currentUser.id}`}
               name={"プロフィール"}
             />
-            <div className="mx-2 mt-2 transform rounded-md px-2 py-1 text-sm font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-300 dark:text-gray-200 dark:hover:bg-gray-700 md:mt-0">
+            <div className="mx-2 mt-2 rounded-md px-2 py-1 text-sm text-gray-700 hover:bg-gray-300 md:mt-0">
               <Logout />
             </div>
           </>
