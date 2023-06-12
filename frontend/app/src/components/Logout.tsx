@@ -1,11 +1,13 @@
-import { FC } from "react";
+// Auth0
 import { useAuth0 } from "@auth0/auth0-react";
+
+// Recoil
 import { useSetRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
 
-const Logout: FC = () => {
+const Logout: React.FC = () => {
   const { logout } = useAuth0();
   const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
