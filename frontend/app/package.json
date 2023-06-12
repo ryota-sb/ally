@@ -13,6 +13,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/recoil": "^0.0.9",
     "axios": "^0.27.2",
+    "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
     "next": "latest",
     "react": "18.1.0",
