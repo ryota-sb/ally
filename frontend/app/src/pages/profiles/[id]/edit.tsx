@@ -30,9 +30,9 @@ const Edit: NextPage<Props> = () => {
   const defaultValues: ProfileInputs = {
     nickname: user?.profile?.nickname,
     gender: user?.profile?.gender,
-    discord_id: user?.profile?.discord_id,
-    game_rank: user?.profile?.game_rank,
-    game_category: user?.profile?.game_category,
+    discordId: user?.profile?.discordId,
+    gameRank: user?.profile?.gameRank,
+    gameCategory: user?.profile?.gameCategory,
     image: { url: user?.profile?.image?.url! },
   };
 
@@ -40,7 +40,7 @@ const Edit: NextPage<Props> = () => {
   if (isError) return <div>An error has occurred.</div>;
 
   // ログインユーザーのプロフィールでなければ、ルートへ遷移
-  if (currentUser.id !== user?.profile?.user_id) {
+  if (currentUser.id !== user?.profile?.userId) {
     // router.push("/");
     console.log(currentUser.id);
     console.log(user?.profile?.id);

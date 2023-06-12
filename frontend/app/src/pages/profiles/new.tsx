@@ -26,9 +26,9 @@ const Create: NextPage<Props> = () => {
   const defaultValues: ProfileInputs = {
     nickname: "",
     gender: "",
-    discord_id: "",
-    game_rank: "",
-    game_category: "",
+    discordId: "",
+    gameRank: "",
+    gameCategory: "",
     image: { url: "" },
   };
 

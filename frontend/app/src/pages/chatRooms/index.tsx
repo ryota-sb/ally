@@ -22,13 +22,13 @@ const ChatRooms: NextPage = () => {
           <h1 className="p-10 text-4xl">Chat Rooms</h1>
           {chatRooms.map((chat_room) => (
             <div
-              key={chat_room.chat_room.id}
+              key={chat_room.chatRoom.id}
               className="flex w-1/2 flex-col divide-y divide-gray-200"
             >
-              <Link href={`/chatRooms/${chat_room.chat_room.id}`}>
+              <Link href={`/chatRooms/${chat_room.chatRoom.id}`}>
                 <div className="m-4 flex cursor-pointer gap-6 rounded-2xl bg-white p-8">
                   <Image
-                    src={chat_room.other_user_profile.image?.url!}
+                    src={chat_room.otherUserProfile.image?.url!}
                     alt="サンプル画像"
                     width={100}
                     height={100}
@@ -37,9 +37,9 @@ const ChatRooms: NextPage = () => {
 
                   <div className="flex flex-col items-start justify-center gap-3">
                     <h1 className="text-3xl">
-                      {chat_room.other_user_profile.nickname}
+                      {chat_room.otherUserProfile.nickname}
                     </h1>
-                    <h1>{chat_room.other_user_profile.game_category}</h1>
+                    <h1>{chat_room.otherUserProfile.gameCategory}</h1>
                   </div>
                 </div>
               </Link>

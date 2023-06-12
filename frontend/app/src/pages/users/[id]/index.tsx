@@ -28,7 +28,7 @@ const Profile: NextPage = () => {
   if (isError) return <div>An error has occurred.</div>;
 
   // ログインユーザーのプロフィールでなければ、ルートへ遷移
-  if (user && currentUser.id !== user?.profile?.user_id) {
+  if (user && currentUser.id !== user?.profile?.userId) {
     router.push("/");
   }
 
@@ -49,8 +49,8 @@ const Profile: NextPage = () => {
             </div>
             <h2 className="mb-4 text-4xl">{user.profile.nickname}</h2>
             <div className="flex gap-3">
-              <div>{user.profile.game_category}</div>
-              <div>{user.profile.game_rank}</div>
+              <div>{user.profile.gameCategory}</div>
+              <div>{user.profile.gameRank}</div>
             </div>
           </div>
         </div>

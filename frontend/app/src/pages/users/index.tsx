@@ -66,7 +66,7 @@ const Users: NextPage = () => {
       },
       body: JSON.stringify({
         from_user_id: user.id,
-        to_user_id: other_user.profile?.user_id,
+        to_user_id: other_user.profile?.userId,
         is_like: is_like,
       }),
     });
@@ -107,8 +107,8 @@ const Users: NextPage = () => {
               )}
             </div>
             <div className="flex gap-3">
-              <div>{otherUser.profile.game_category}</div>
-              <div>{otherUser.profile.game_rank}</div>
+              <div>{otherUser.profile.gameCategory}</div>
+              <div>{otherUser.profile.gameRank}</div>
             </div>
             <div className="mt-40 flex gap-8">
               <button onClick={() => createLike(otherUser, false)}>

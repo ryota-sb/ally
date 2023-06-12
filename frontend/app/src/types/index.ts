@@ -11,16 +11,16 @@ export type User = {
 export type ProfileInputs = {
   nickname?: string;
   gender?: string;
-  discord_id?: string;
-  game_rank?: string;
-  game_category?: string;
+  discordId?: string;
+  gameRank?: string;
+  gameCategory?: string;
   image?: { url: string };
 };
 
 // プロフィールのデータ
 export type ProfileData = ProfileInputs & {
   id: number;
-  user_id: number;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -28,15 +28,15 @@ export type ProfileData = ProfileInputs & {
 // ライクのデータ
 export type Like = {
   id?: number;
-  form_user_id: number | undefined | null;
-  to_user_id: number | undefined | null;
+  formUserId: number | undefined | null;
+  toUserId: number | undefined | null;
 };
 
 // チャットルームのデータ
 export type ChatRoomData = {
-  chat_room: { id: number };
-  other_user: User;
-  other_user_profile: ProfileData;
+  chatRoom: { id: number };
+  otherUser: User;
+  otherUserProfile: ProfileData;
   messages: Message[];
 };
 
@@ -47,7 +47,7 @@ export type MessageInputs = {
 
 // メッセージのデータ
 export type Message = MessageInputs & {
-  user_id: number;
-  chat_room_id: number;
-  created_at: Date;
+  userId: number;
+  chatRoomId: number;
+  createdAt: Date;
 };

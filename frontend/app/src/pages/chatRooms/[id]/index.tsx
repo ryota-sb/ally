@@ -39,7 +39,7 @@ type ChatRoomFetchData = {
 const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
   // CurrentUserのメッセージならtrueを返す
   const isCurrentUserMessage = (messageUserId: number) => {
-    return chatRoom?.other_user.id !== messageUserId;
+    return chatRoom?.otherUser.id !== messageUserId;
   };
 
   const { chatRoom, isLoading, isError, mutate }: ChatRoomFetchData =
@@ -53,13 +53,21 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
       {chatRoom && (
         <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
           <div className="w-full max-w-lg">
-            <h1 className="p-4 text-center text-3xl">
-              {chatRoom.other_user_profile.nickname}
-            </h1>
+            <div className="mb-6 flex justify-center">
+              <Image
+                src={chatRoom.otherUserProfile.image?.url!}
+                width={70}
+                height={70}
+                className="rounded-full object-cover"
+              />
+              <h1 className="p-4 text-center text-3xl">
+                {chatRoom.otherUserProfile.nickname}
+              </h1>
+            </div>
             <div style={{ height: 900 }} className="w-full bg-white p-4">
               {chatRoom.messages.map((message, index) => (
                 <div key={index}>
-                  {isCurrentUserMessage(message.user_id) ? (
+                  {isCurrentUserMessage(message.userId) ? (
                     <div className="flex justify-end">
                       <h1 className="m-2 rounded-md bg-indigo-200 p-2">
                         {message.content}
@@ -68,14 +76,14 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
                   ) : (
                     <div className="flex justify-start">
                       <Image
-                        src={chatRoom?.other_user_profile.image?.url!}
+                        src={chatRoom?.otherUserProfile.image?.url!}
                         width={60}
                         height={60}
                         className="rounded-full object-cover"
                       />
                       <h1 className="m-2 rounded-md bg-gray-200 p-2">
                         {message.content}
-                        {chatRoom.other_user_profile.nickname}
+                        {/* {chatRoom.other_user_profile.nickname} */}
                       </h1>
                     </div>
                   )}

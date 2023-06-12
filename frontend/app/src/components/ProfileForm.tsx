@@ -59,9 +59,9 @@ const ProfileForm = (props: Props) => {
     const formData = new FormData();
     formData.append("profile[nickname]", profileInputData.nickname!);
     formData.append("profile[gender]", profileInputData.gender!);
-    formData.append("profile[game_category]", profileInputData.game_category!);
-    formData.append("profile[game_rank]", profileInputData.game_rank!);
-    formData.append("profile[discord_id]", profileInputData.discord_id!);
+    formData.append("profile[game_category]", profileInputData.gameCategory!);
+    formData.append("profile[game_rank]", profileInputData.gameRank!);
+    formData.append("profile[discord_id]", profileInputData.discordId!);
     formData.append("profile[image]", image!, image!.name);
     console.log(formData);
     return isProfile
@@ -150,7 +150,7 @@ const ProfileForm = (props: Props) => {
             </div>
             <div className="w-2/3">
               <input
-                {...register("discord_id")}
+                {...register("discordId")}
                 className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
               />
             </div>
@@ -164,7 +164,7 @@ const ProfileForm = (props: Props) => {
             </div>
             <div className="w-2/3">
               <input
-                {...register("game_rank")}
+                {...register("gameRank")}
                 className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
               />
             </div>
@@ -178,10 +178,10 @@ const ProfileForm = (props: Props) => {
             </div>
             <div className="w-2/3">
               <input
-                {...register("game_category", { required: true })}
+                {...register("gameCategory", { required: true })}
                 className="w-full appearance-none rounded border-2 border-gray-200 bg-gray-200 py-2 px-4 leading-tight text-gray-700 focus:border-purple-500 focus:bg-white focus:outline-none"
               />
-              {errors.game_category && (
+              {errors.gameCategory && (
                 <div className="text-red-500">入力が必須の項目です。</div>
               )}
             </div>
