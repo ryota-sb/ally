@@ -12,6 +12,7 @@ gem 'dotenv-rails'
 gem 'jwt'
 gem 'carrierwave'
 gem 'auth0'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'pry-byebug'
