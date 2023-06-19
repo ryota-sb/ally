@@ -9,20 +9,24 @@ class Api::V1::ChatRoomsController < ApplicationController
       chat_rooms << {
         chat_room: chat_room,
         other_user: other_user,
-        other_user_profile: other_user.profile,
         last_message: chat_room.messages[-1]
       }
     end
-    render json: chat_rooms
+    render json: chat_rooms, each_serializer: ChatRoomUserSerializer
   end
 
   # GET /api/v1/chat_rooms/:id
   def show
     chat_room = ChatRoom.find(params[:id])
-    other_user = chat_room.users.where.not(id: @current_user.id)[0]
-    other_user_profile = other_user.profile
+    other_user = chat_room.users.where.not(id: @current_user.id).includes(:profile).first
     messages = chat_room.messages.order("created_at ASC")
 
-    render json: { status: 200, other_user: other_user, other_user_profile: other_user_profile, messages: messages }
+    chat_room_data = {
+      chat_room: chat_room,
+      other_user: other_user,
+      messages: messages
+    }
+
+    render json: chat_room_data, serializer: ChatRoomDataSerializer
   end
 end
