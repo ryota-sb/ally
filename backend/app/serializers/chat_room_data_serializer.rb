@@ -1,6 +1,6 @@
-class ChatRoomUserSerializer < ActiveModel::Serializer
-  type "chat_room_users"
-  attributes :chat_room, :other_user, :last_message
+class ChatRoomDataSerializer < ActiveModel::Serializer
+  type "chat_room_data"
+  attributes :chat_room, :other_user, :messages
 
   def chat_room
     serialized_chat_room = ChatRoomSerializer.new(object[:chat_room])
@@ -12,10 +12,8 @@ class ChatRoomUserSerializer < ActiveModel::Serializer
     serialized_other_user.attributes.merge(profile: profile_attributes)
   end
 
-  def last_message
-    return nil if object[:last_message].nil?
-    serialized_message = MessageSerializer.new(object[:last_message])
-    serialized_message.attributes
+  def messages
+    object[:messages].map { |message| MessageSerializer.new(message).attributes }
   end
 
   private
