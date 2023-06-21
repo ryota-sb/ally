@@ -61,13 +61,13 @@ const MessageForm = (props: Props) => {
 
   return (
     <div>
-      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex">
           <input
             {...register("content", { required: true })}
-            className="flex-1 rounded-b-lg border-2 py-2 px-4 focus:border-indigo-200 focus:outline-none"
+            className="flex-1 rounded-bl-2xl border-2 py-2 px-4 focus:border-indigo-200 focus:outline-none"
           />
-          <button className="bg-indigo-200 px-4">
+          <button className="rounded-br-2xl bg-indigo-200 px-4">
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>
