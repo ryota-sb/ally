@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +17,10 @@ import userState from "recoil/atoms/userState";
 import Loading from "pages/loading";
 import Layout from "components/Layout";
 
+// FontAwesome Icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+
 const Profile: NextPage = () => {
   const router = useRouter();
 
@@ -28,29 +32,43 @@ const Profile: NextPage = () => {
   if (isError) return <div>An error has occurred.</div>;
 
   // ログインユーザーのプロフィールでなければ、ルートへ遷移
-  if (user && currentUser.id !== user?.profile?.userId) {
+  if (user && currentUser.id !== user.profile?.userId) {
     router.push("/");
   }
 
   return (
     <Layout>
       {user && user.profile ? (
-        <div className="flex h-screen w-full items-center justify-center bg-gray-100">
-          <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
-            <Link href={`/profiles/${user.profile.id}/edit`}>Setting</Link>
-            <div className="m-10">
-              <Image
-                src={user.profile.image?.url!}
-                alt="サンプル画像"
-                width={300}
-                height={300}
-                className="rounded-full object-cover"
+        <div className="flex min-h-screen flex-col items-center bg-gray-100">
+          <div className="flex items-center">
+            <h1 className="whitespace-nowrap p-10 text-4xl">プロフィール</h1>
+
+            <Link href={`/profiles/${user.profile.id}/edit`}>
+              <FontAwesomeIcon
+                size={"xl"}
+                icon={faGear}
+                className="cursor-pointer"
               />
+            </Link>
+          </div>
+
+          <div className="flex max-w-2xl flex-col gap-6 rounded-2xl bg-white p-20 shadow-lg shadow-gray-200">
+            <div className="relative flex items-center justify-center">
+              <div className="h-[200px] w-[200px] md:h-[300px] md:w-[300px]">
+                <Image
+                  src={user.profile.image?.url!}
+                  alt={user.profile.nickname}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              </div>
             </div>
-            <h2 className="mb-4 text-4xl">{user.profile.nickname}</h2>
-            <div className="flex gap-3">
-              <div>{user.profile.gameCategory}</div>
-              <div>{user.profile.gameRank}</div>
+
+            <h2 className="text-center text-4xl">{user.profile.nickname}</h2>
+            <div className="flex justify-center gap-3">
+              <h3>{user.profile.gameCategory}</h3>
+              <h3>{user.profile.gameRank}</h3>
             </div>
           </div>
         </div>

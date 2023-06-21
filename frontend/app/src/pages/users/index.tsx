@@ -79,38 +79,47 @@ const Users: NextPage = () => {
     }, 2000);
   };
 
+  const isMan = (gender: "man" | "woman") => {
+    return gender == "man";
+  };
+
   if (isRandomUserLoading && isUserLoading) return <Loading />;
   if (isRandomUserError) return <div>Error fetching random user data</div>;
   if (isUserError) return <div>Error fetching user data</div>;
 
   return (
-    <div>
+    <>
       {currentUser && otherUser?.profile ? (
         // プロフィールが登録されている場合の表示
-        <div className="flex h-screen w-full items-center justify-center bg-gray-100">
-          <div className="flex h-4/5 w-2/5 flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-lg shadow-gray-200">
-            <div className="m-10">
-              <Image
-                src={otherUser.profile.image?.url!}
-                alt="サンプル画像"
-                width={300}
-                height={300}
-                className="rounded-full object-cover"
-              />
+        <div className="flex min-h-screen flex-col items-center bg-gray-100 px-10 py-20">
+          <div className="flex max-w-2xl flex-col gap-6 rounded-2xl bg-white p-20 shadow-lg shadow-gray-200">
+            <div className="relative flex items-center justify-center">
+              <div className="h-[200px] w-[200px] md:h-[300px] md:w-[300px]">
+                <Image
+                  src={otherUser.profile.image?.url!}
+                  alt={otherUser.profile.nickname}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              </div>
             </div>
-            <div className="mb-4 flex items-center gap-2">
-              <h2 className=" text-4xl">{otherUser.profile.nickname}</h2>
-              {otherUser.profile.gender == "man" ? (
+
+            <div className="flex items-center justify-center gap-2">
+              <h2 className="text-4xl">{otherUser.profile.nickname}</h2>
+              {isMan(otherUser.profile.gender) ? (
                 <Male size={30} />
               ) : (
                 <Female size={30} />
               )}
             </div>
-            <div className="flex gap-3">
-              <div>{otherUser.profile.gameCategory}</div>
-              <div>{otherUser.profile.gameRank}</div>
+
+            <div className="flex justify-center gap-3">
+              <h3>{otherUser.profile.gameCategory}</h3>
+              <h3>{otherUser.profile.gameRank}</h3>
             </div>
-            <div className="mt-40 flex gap-8">
+
+            <div className="mt-20 flex justify-center gap-8">
               <button onClick={() => createLike(otherUser, false)}>
                 <XCircle size={60} />
               </button>
@@ -139,7 +148,7 @@ const Users: NextPage = () => {
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
