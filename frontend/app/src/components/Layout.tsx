@@ -53,9 +53,9 @@ export default function Layout({ children }: Props) {
   }, [getIdTokenClaims, logout, isAuthenticated]);
 
   return (
-    <div className="flex flex-col">
+    <>
       <Header />
       {children}
-    </div>
+    </>
   );
 }
