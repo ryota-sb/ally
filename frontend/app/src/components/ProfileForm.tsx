@@ -103,12 +103,12 @@ const ProfileForm = (props: Props) => {
   };
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
-      <h1 className="mb-10 text-3xl">
+    <div className="min-h-screen bg-gray-100 px-4">
+      <h1 className="whitespace-nowrap p-10 text-center text-4xl">
         {isProfile ? "プロフィール作成" : "プロフィール更新"}
       </h1>
-      <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-6">
+      <div className="mx-auto flex max-w-2xl flex-col items-center justify-center rounded-2xl bg-white p-10">
+        <form className="max-w-md" onSubmit={handleSubmit(onSubmit)}>
           {/* nickname */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
@@ -126,6 +126,7 @@ const ProfileForm = (props: Props) => {
               )}
             </div>
           </div>
+
           {/* gender */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
@@ -141,7 +142,8 @@ const ProfileForm = (props: Props) => {
               )}
             </div>
           </div>
-          {/* discord_id */}
+
+          {/* discordId */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
               <label className="mb-1 pr-4 font-bold text-gray-500">
@@ -155,7 +157,8 @@ const ProfileForm = (props: Props) => {
               />
             </div>
           </div>
-          {/* game_rank */}
+
+          {/* gameRank */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
               <label className="mb-1 pr-4 font-bold text-gray-500">
@@ -169,7 +172,8 @@ const ProfileForm = (props: Props) => {
               />
             </div>
           </div>
-          {/* game_category */}
+
+          {/* gameCategory */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
               <label className="mb-1 pr-4 font-bold text-gray-500">
@@ -186,6 +190,7 @@ const ProfileForm = (props: Props) => {
               )}
             </div>
           </div>
+
           {/* image */}
           <div className="mb-6 flex">
             <div className="flex w-1/3 items-center">
@@ -203,27 +208,30 @@ const ProfileForm = (props: Props) => {
               />
             </div>
           </div>
+
           {/* image preview */}
-          <Image
-            src={previewImage}
-            alt="プレビュー画像"
-            width={500}
-            height={500}
-            className="m-auto h-2/5 border-2 border-solid border-black object-contain"
-          />
-          <div className="flex items-center">
-            <div className="w-1/3"></div>
-            <div className="w-2/3">
-              <button
-                type="submit"
-                className="focus:shadow-outline rounded bg-purple-500 py-2 px-4 font-bold text-white shadow hover:bg-purple-400 focus:outline-none"
-              >
-                {isProfile ? "登録" : "更新"}
-              </button>
-            </div>
+          <div className="relative h-[300px] border border-black md:h-[400px]">
+            <Image
+              src={previewImage}
+              alt="プレビュー画像"
+              // width={500}
+              // height={500}
+              layout="fill"
+              className="object-cover"
+            />
           </div>
-        </div>
-      </form>
+
+          {/* form button */}
+          <div className="mt-4 flex items-center justify-center">
+            <button
+              type="submit"
+              className="focus:shadow-outline rounded bg-purple-500 py-2 px-4 font-bold text-white shadow hover:bg-purple-400 focus:outline-none"
+            >
+              {isProfile ? "登録" : "更新"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
