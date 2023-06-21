@@ -18,7 +18,7 @@ import profileState from "recoil/atoms/profileState";
 
 type Props = {
   profileData?: ProfileData;
-  defaultValues: ProfileInputs;
+  defaultValues: Partial<ProfileInputs>;
 };
 
 const ProfileForm = (props: Props) => {

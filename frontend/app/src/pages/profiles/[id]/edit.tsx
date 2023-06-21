@@ -27,7 +27,7 @@ const Edit: NextPage<Props> = () => {
   const { user, isLoading, isError } = getUser(currentUser.id);
 
   // フォームの初期値
-  const defaultValues: ProfileInputs = {
+  const defaultValues: Partial<ProfileInputs> = {
     nickname: user?.profile?.nickname,
     gender: user?.profile?.gender,
     discordId: user?.profile?.discordId,

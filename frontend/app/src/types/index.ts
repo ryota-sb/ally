@@ -10,7 +10,7 @@ export type User = {
 // プロフィールのフォーム入力データ
 export type ProfileInputs = {
   nickname?: string;
-  gender?: string;
+  gender: "man" | "woman";
   discordId?: string;
   gameRank?: string;
   gameCategory?: string;
@@ -36,7 +36,6 @@ export type Like = {
 export type ChatRoomData = {
   chatRoom: { id: number };
   otherUser: User;
-  otherUserProfile: ProfileData;
   messages: Message[];
 };
 

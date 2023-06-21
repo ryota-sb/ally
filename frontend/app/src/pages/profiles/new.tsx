@@ -23,9 +23,9 @@ const Create: NextPage<Props> = () => {
   const isClient = useClient();
 
   // フォームの初期値
-  const defaultValues: ProfileInputs = {
+  const defaultValues: Partial<ProfileInputs> = {
     nickname: "",
-    gender: "",
+    gender: undefined,
     discordId: "",
     gameRank: "",
     gameCategory: "",
