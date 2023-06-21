@@ -37,13 +37,13 @@ type ChatRoomFetchData = {
 };
 
 const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
+  const { chatRoom, isLoading, isError, mutate }: ChatRoomFetchData =
+    getChatRoom(chatRoomId);
+
   // CurrentUserのメッセージならtrueを返す
   const isCurrentUserMessage = (messageUserId: number) => {
     return chatRoom?.otherUser.id !== messageUserId;
   };
-
-  const { chatRoom, isLoading, isError, mutate }: ChatRoomFetchData =
-    getChatRoom(chatRoomId);
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
@@ -51,45 +51,48 @@ const ChatRoom: NextPage<Props> = ({ chatRoomId }) => {
   return (
     <Layout>
       {chatRoom && (
-        <div className="flex h-screen flex-col items-center justify-center bg-gray-100">
-          <div className="w-full max-w-lg">
-            <div className="mb-6 flex justify-center">
+        <div className="min-h-screen bg-gray-100 p-4">
+          <div className="mx-auto max-w-sm md:max-w-md lg:max-w-lg">
+            <div className="flex justify-center p-10">
               <Image
-                src={chatRoom.otherUserProfile.image?.url!}
+                src={chatRoom.otherUser.profile?.image?.url!}
+                alt={chatRoom.otherUser.profile?.nickname}
                 width={70}
                 height={70}
                 className="rounded-full object-cover"
               />
               <h1 className="p-4 text-center text-3xl">
-                {chatRoom.otherUserProfile.nickname}
+                {chatRoom.otherUser.profile?.nickname}
               </h1>
             </div>
-            <div style={{ height: 900 }} className="w-full bg-white p-4">
+
+            <div className="h-[800px] rounded-t-2xl bg-white p-4">
               {chatRoom.messages.map((message, index) => (
                 <div key={index}>
                   {isCurrentUserMessage(message.userId) ? (
                     <div className="flex justify-end">
-                      <h1 className="m-2 rounded-md bg-indigo-200 p-2">
-                        {message.content}
-                      </h1>
+                      <div className="m-2 max-w-[200px] rounded-md bg-indigo-200 p-2">
+                        <p className="break-words">{message.content}</p>
+                      </div>
                     </div>
                   ) : (
                     <div className="flex justify-start">
                       <Image
-                        src={chatRoom?.otherUserProfile.image?.url!}
+                        src={chatRoom.otherUser.profile?.image?.url!}
+                        alt={chatRoom.otherUser.profile?.nickname}
                         width={60}
                         height={60}
                         className="rounded-full object-cover"
                       />
-                      <h1 className="m-2 rounded-md bg-gray-200 p-2">
-                        {message.content}
-                        {/* {chatRoom.other_user_profile.nickname} */}
-                      </h1>
+                      <div className="m-2 max-w-[200px] rounded-md bg-gray-200 p-2">
+                        <p className="break-words">{message.content}</p>
+                      </div>
                     </div>
                   )}
                 </div>
               ))}
             </div>
+
             <MessageForm id={chatRoomId} mutate={mutate} />
           </div>
         </div>
