@@ -5,7 +5,7 @@ Rails.application.configure do
   config.eager_load = false
   config.consider_all_requests_local = true
 
-  # render.com deploy用 追記
+  # 開発環境のホスト設定
   config.hosts << "backend"
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
