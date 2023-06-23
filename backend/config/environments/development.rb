@@ -6,7 +6,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # 開発環境のホスト設定
-  config.hosts << "ally-api.onrender.com"
+  config.hosts << "backend"
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.cache_store = :memory_store

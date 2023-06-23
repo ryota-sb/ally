@@ -13,6 +13,8 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.active_support.disallowed_deprecation = :log
   config.active_support.disallowed_deprecation_warnings = []
+
+  config.hosts << "ally-api.onrender.com"
   
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
