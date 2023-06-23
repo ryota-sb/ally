@@ -15,7 +15,7 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
   config.log_formatter = ::Logger::Formatter.new
 
-  config.hosts << ENV['ALLOWED_HOST']
+  config.hosts.clear
   
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
