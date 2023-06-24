@@ -33,9 +33,10 @@ const Callback: NextPage = () => {
       try {
         const accessToken = await getAccessTokenSilently({});
         setToken(accessToken);
-        console.log(accessToken);
       } catch (e) {
-        console.log(e.message);
+        if (e instanceof Error) {
+          console.log(e.message);
+        }
       }
     };
 
