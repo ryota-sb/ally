@@ -1,16 +1,19 @@
 import { NextPage } from "next";
 import { useEffect } from "react";
+import axios from "axios";
 
+// Recoil
 import { useRecoilState, useSetRecoilState } from "recoil";
 import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
 
+// Auth0
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Loading from "pages/loading";
 
-import axios from "axios";
+import getBasePath from "lib/getBasePath";
 
 // 2秒後にルートパスに画面遷移
 if (typeof window !== "undefined") {
@@ -44,7 +47,7 @@ const Callback: NextPage = () => {
 
     if (token) {
       axios
-        .get("http://localhost:3000/api/v1/login", {
+        .get(`${getBasePath()}/api/v1/login`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
