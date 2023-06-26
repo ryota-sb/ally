@@ -20,7 +20,7 @@ if (typeof window !== "undefined") {
   if (window.location.pathname === "/callback") {
     setTimeout(() => {
       window.location.href = "/";
-    }, 2000);
+    }, 100000);
   }
 }
 
