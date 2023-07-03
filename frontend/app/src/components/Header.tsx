@@ -67,6 +67,7 @@ const Header: React.FC = () => {
       <nav className="mx-4 hidden flex-col md:mx-8 md:flex md:flex-row md:items-center">
         {isAuthenticated ? (
           <>
+            <CustomLink href={"/chatRooms"} name={"マッチング"} />
             <CustomLink href={"/"} name={"探す"} />
             <CustomLink
               href={`/users/${currentUser.id}`}
