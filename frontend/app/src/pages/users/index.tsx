@@ -89,7 +89,7 @@ const Users: NextPage = () => {
 
   return (
     <>
-      {currentUser && otherUser?.profile ? (
+      {currentUser?.profile && otherUser?.profile ? (
         // プロフィールが登録されている場合の表示
         <div className="flex min-h-screen flex-col items-center bg-gray-100 px-10 py-20">
           <div className="flex max-w-2xl flex-col gap-6 rounded-2xl bg-white p-20 shadow-lg shadow-gray-200">
