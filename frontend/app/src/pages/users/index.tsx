@@ -32,14 +32,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Users: NextPage = () => {
-  // コンソールでデータ取得確認
-  useEffect(() => {
-    console.log(otherUser);
-    console.log(currentUser);
-  });
-
   const router = useRouter();
 
+  // Recoilのステート
   const token = useRecoilValue(tokenState);
   const user = useRecoilValue(userState);
 
@@ -56,6 +51,12 @@ const Users: NextPage = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = getUser(user.id);
+
+  // コンソールでデータ取得確認
+  useEffect(() => {
+    console.log(otherUser);
+    console.log(currentUser);
+  });
 
   const createLike = async (other_user: User, is_like: boolean) => {
     const response = await fetch(`${getBasePath()}/api/v1/likes`, {
@@ -87,10 +88,10 @@ const Users: NextPage = () => {
   if (isRandomUserError) return <div>Error fetching random user data</div>;
   if (isUserError) return <div>Error fetching user data</div>;
 
-  return (
-    <>
-      {currentUser?.profile && otherUser?.profile ? (
-        // プロフィールが登録されている場合の表示
+  const renderProfile = () => {
+    if (currentUser?.profile && otherUser?.profile) {
+      return (
+        // プロフィールが登録されている場合
         <div className="flex min-h-screen flex-col items-center bg-gray-100 px-10 py-20">
           <div className="flex max-w-2xl flex-col gap-6 rounded-2xl bg-white p-20 shadow-lg shadow-gray-200">
             <div className="relative flex items-center justify-center">
@@ -130,8 +131,10 @@ const Users: NextPage = () => {
             </div>
           </div>
         </div>
-      ) : (
-        // プロフィールが登録されていない場合の表示
+      );
+    } else if (!currentUser?.profile) {
+      return (
+        // ログインユーザーのプロフィールが登録されていない場合
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h1 className="text-3xl">初めにプロフィール作成してください</h1>
           <button className="m-10">
@@ -147,9 +150,18 @@ const Users: NextPage = () => {
             </a>
           </button>
         </div>
-      )}
-    </>
-  );
+      );
+    } else {
+      return (
+        // 他ユーザーが存在しない、もしくは、いいねを全てのユーザーに対してしてしまった場合
+        <div className="flex h-screen w-screen flex-col items-center justify-center">
+          <h1 className="text-3xl">ユーザーが存在しません。</h1>
+        </div>
+      );
+    }
+  };
+
+  return <>{renderProfile()}</>;
 };
 
 export default Users;
