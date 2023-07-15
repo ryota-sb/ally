@@ -4,9 +4,6 @@ import Image from "next/image";
 // Custom SWR
 import { getChatRoom } from "hooks/api/chat_room";
 
-// type
-import { ChatRoomData } from "types";
-
 // swr type
 import { KeyedMutator } from "swr";
 
@@ -14,6 +11,8 @@ import { KeyedMutator } from "swr";
 import MessageForm from "components/MessageForm";
 import Layout from "components/Layout";
 import Loading from "pages/loading";
+
+import type { ChatRoomData } from "types";
 
 // サーバーサイトでURLパラメータに含まれるID部分を取得（クライアントサイドでは、ページリロードすると値を維持できないため）
 export const getServerSideProps: GetServerSideProps = async (context) => {
