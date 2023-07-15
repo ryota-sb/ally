@@ -2,7 +2,7 @@ class Api::V1::LikesController < ApplicationController
 
   # GET /api/v1/likes
   def index
-    render json: { status: 200, active_likes: @current_user.active_likes, passive_likes: @current_user.passive_likes }
+    render json: @current_user, serializer: LikeUserSerializer
   end
   
   # POST /api/v1/likes
