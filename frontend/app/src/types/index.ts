@@ -27,9 +27,17 @@ export type ProfileData = ProfileInputs & {
 
 // ライクのデータ
 export type Like = {
-  id?: number;
+  id: number;
   formUserId: number | undefined | null;
   toUserId: number | undefined | null;
+  isLike: boolean;
+};
+
+export type UserLikes = {
+  activeLikes: User[];
+  passiveLikes: User[];
+  activeLikesLength: number;
+  passiveLikesLength: number;
 };
 
 // チャットルームのデータ
