@@ -4,7 +4,7 @@ import Image from "next/image";
 // Custom SWR
 import { useUserLikes } from "hooks/api/like";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Components and pages
 import Loading from "pages/loading";
@@ -13,10 +13,6 @@ import Layout from "components/Layout";
 const Likes: NextPage = () => {
   const [isActiveLikes, setIsActiveLikes] = useState(true);
   const { userLikes, isLoading, isError } = useUserLikes();
-
-  useEffect(() => {
-    console.log(userLikes);
-  });
 
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
