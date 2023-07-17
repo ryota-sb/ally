@@ -14,7 +14,7 @@ import Login from "components/Login";
 import { parseCookies } from "nookies";
 
 const Home: NextPage = () => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isLoading } = useAuth0();
   const accessToken = parseCookies().accessToken;
 
   return (
