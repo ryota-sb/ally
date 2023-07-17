@@ -10,8 +10,12 @@ import Loading from "pages/loading";
 import Layout from "components/Layout";
 import Login from "components/Login";
 
+// Cookie
+import { parseCookies } from "nookies";
+
 const Home: NextPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
+  const accessToken = parseCookies().accessToken;
 
   return (
     <div>
@@ -20,7 +24,7 @@ const Home: NextPage = () => {
       </Head>
       <Layout>
         <main>
-          {isAuthenticated ? (
+          {accessToken ? (
             <Users />
           ) : isLoading ? (
             <Loading />
