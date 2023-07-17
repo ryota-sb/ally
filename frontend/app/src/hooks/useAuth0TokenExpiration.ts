@@ -5,16 +5,17 @@ import jwt from "jsonwebtoken";
 
 // Recoil
 import { useSetRecoilState } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
+
+// Cookie
+import { destroyCookie } from "nookies";
 
 type DecodeTokenExpire = {
   exp: number;
 };
 
 const useAuth0TokenExpiration = () => {
-  const setToken = useSetRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
   const setProfile = useSetRecoilState(profileState);
 
@@ -38,7 +39,7 @@ const useAuth0TokenExpiration = () => {
       if (!tokenExpirationDate) return;
       const timeUntilExpiration = tokenExpirationDate.getTime() - Date.now();
       if (timeUntilExpiration < 0) {
-        setToken("");
+        destroyCookie(null, "accessToken");
         setUser("");
         setProfile("");
         logout({ returnTo: window.location.origin });

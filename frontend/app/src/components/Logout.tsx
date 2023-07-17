@@ -3,18 +3,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 // Recoil
 import { useSetRecoilState } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
 
+// Cookie
+import { destroyCookie } from "nookies";
+
 const Logout: React.FC = () => {
   const { logout } = useAuth0();
-  const setToken = useSetRecoilState(tokenState);
+
   const setUser = useSetRecoilState(userState);
   const setProfile = useSetRecoilState(profileState);
 
   const userLogout = () => {
-    setToken("");
+    destroyCookie(null, "accessToken");
     setUser("");
     setProfile("");
     logout({ returnTo: window.location.origin });

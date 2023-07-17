@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -15,8 +15,10 @@ import getBasePath from "lib/getBasePath";
 
 // Recoil
 import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
 import userState from "recoil/atoms/userState";
+
+// Cookie
+import { parseCookies } from "nookies";
 
 // SVG Icon Components
 import XCircle from "components/svg_icons/XCircle";
@@ -34,10 +36,9 @@ import "react-toastify/dist/ReactToastify.css";
 const Users: NextPage = () => {
   const router = useRouter();
 
-  // Recoilのステート
-  const token = useRecoilValue(tokenState);
   const user = useRecoilValue(userState);
 
+  const accessToken = parseCookies().accessToken;
   // ログインユーザー（自分）以外のユーザーをランダムで一人取得
   const {
     otherUser,
@@ -62,7 +63,7 @@ const Users: NextPage = () => {
     const response = await fetch(`${getBasePath()}/api/v1/likes`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

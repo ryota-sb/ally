@@ -10,9 +10,8 @@ import { KeyedMutator } from "swr";
 // BasePath
 import getBasePath from "lib/getBasePath";
 
-// Recoil
-import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
+// Cookie
+import { parseCookies } from "nookies";
 
 // FontAwesome Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +23,7 @@ type Props = {
 };
 
 const MessageForm = (props: Props) => {
-  const token = useRecoilValue(tokenState);
+  const accessToken = parseCookies().accessToken;
 
   const {
     register,
@@ -41,7 +40,7 @@ const MessageForm = (props: Props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         message: {

@@ -12,9 +12,11 @@ import { ProfileData, ProfileInputs } from "types";
 import getBasePath from "lib/getBasePath";
 
 // Recoil
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
+import { useSetRecoilState } from "recoil";
 import profileState from "recoil/atoms/profileState";
+
+// Cookie
+import { parseCookies } from "nookies";
 
 type Props = {
   profileData?: ProfileData;
@@ -23,7 +25,9 @@ type Props = {
 
 const ProfileForm = (props: Props) => {
   const router = useRouter();
-  const token = useRecoilValue(tokenState);
+
+  const accessToken = parseCookies().accessToken;
+
   const setProfileValue = useSetRecoilState(profileState);
 
   const profile = props?.profileData;
@@ -75,7 +79,7 @@ const ProfileForm = (props: Props) => {
   const setConfig = (http: HttpMethods, data: FormData) => {
     const config = {
       method: http,
-      headers: { authorization: `Bearer ${token}` },
+      headers: { authorization: `Bearer ${accessToken}` },
       body: data,
     };
     return config;

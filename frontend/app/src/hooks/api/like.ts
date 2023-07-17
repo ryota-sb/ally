@@ -7,16 +7,15 @@ import getBasePath from "lib/getBasePath";
 // types
 import type { UserLikes } from "types";
 
-// Recoil
-import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
+// Cookie
+import { parseCookies } from "nookies";
 
 const useUserLikes = () => {
-  const token = useRecoilValue(tokenState);
+  const accessToken = parseCookies().accessToken;
   const { data, error } = useSWR<UserLikes>(
     `${getBasePath()}/api/v1/likes`,
     (url) =>
-      fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
+      fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } }).then(
         (res) => res.json()
       )
   );

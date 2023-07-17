@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import axios from "axios";
 
 // Recoil
-import { useRecoilState, useSetRecoilState } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
+import { useSetRecoilState } from "recoil";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
+
+// Cookie
+import { setCookie } from "nookies";
 
 // Auth0
 import { useAuth0 } from "@auth0/auth0-react";
@@ -25,7 +27,6 @@ if (typeof window !== "undefined") {
 }
 
 const Callback: NextPage = () => {
-  const [token, setToken] = useRecoilState(tokenState);
   const setUser = useSetRecoilState(userState);
   const setProfile = useSetRecoilState(profileState);
   const { getAccessTokenSilently } = useAuth0();
@@ -35,7 +36,25 @@ const Callback: NextPage = () => {
     const getToken = async () => {
       try {
         const accessToken = await getAccessTokenSilently({});
-        setToken(accessToken);
+        setCookie(null, "accessToken", accessToken, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: "/",
+        });
+
+        if (accessToken) {
+          axios
+            .get(`${getBasePath()}/api/v1/login`, {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            })
+            .then((res) => {
+              setUser(res.data.user);
+              setProfile(res.data.profile);
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       } catch (e) {
         if (e instanceof Error) {
           console.log(e.message);
@@ -44,21 +63,6 @@ const Callback: NextPage = () => {
     };
 
     getToken();
-
-    if (token) {
-      axios
-        .get(`${getBasePath()}/api/v1/login`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setUser(res.data.user);
-          setProfile(res.data.profile);
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   });
 
   return <Loading />;

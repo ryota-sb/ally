@@ -7,17 +7,16 @@ import getBasePath from "lib/getBasePath";
 // types
 import { ChatRoomData } from "types";
 
-// Recoil
-import { useRecoilValue } from "recoil";
-import tokenState from "recoil/atoms/tokenState";
+// Cookie
+import { parseCookies } from "nookies";
 
 // 全てのチャットルーム取得
 const getChatRooms = () => {
-  const token = useRecoilValue(tokenState);
+  const accessToken = parseCookies().accessToken;
   const { data, error } = useSWR<ChatRoomData[]>(
     `${getBasePath()}/api/v1/chat_rooms`,
     (url) =>
-      fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
+      fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } }).then(
         (res) => res.json()
       )
   );
@@ -31,11 +30,11 @@ const getChatRooms = () => {
 
 // 渡されたIDのチャットルームを取得
 const getChatRoom = (id: number) => {
-  const token = useRecoilValue(tokenState);
+  const accessToken = parseCookies().accessToken;
   const { data, error, mutate } = useSWR<ChatRoomData>(
     `${getBasePath()}/api/v1/chat_rooms/${id}`,
     (url) =>
-      fetch(url, { headers: { Authorization: `Bearer ${token}` } }).then(
+      fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } }).then(
         (res) => res.json()
       )
   );
