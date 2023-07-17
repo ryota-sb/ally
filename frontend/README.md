@@ -13,3 +13,4 @@
 - SRW 2.0.0
 - Recoil 0.7.4
 - auth0-react 1.10.2
+- nookies 2.5.2
