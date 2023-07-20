@@ -6,6 +6,13 @@ class User < ApplicationRecord
   has_many :active_likes, through: :likes_from, source: :to_user
   has_many :passive_likes, through: :likes_to, source: :from_user
 
+  # is_likeがtrueのLikeレコード
+  has_many :liked_from, -> { liked }, class_name: 'Like', foreign_key: :from_user_id, dependent: :destroy
+  has_many :liked_to, -> { liked }, class_name: 'Like', foreign_key: :to_user_id, dependent: :destroy
+  # is_likeがtrueのUserレコード
+  has_many :active_liked_user, through: :liked_from, source: :to_user
+  has_many :passive_liked_user, through: :liked_to, source: :from_user
+
   has_many :chat_room_users
   has_many :chat_rooms, through: :chat_room_users
 

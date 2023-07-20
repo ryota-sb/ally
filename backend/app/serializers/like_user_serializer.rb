@@ -1,13 +1,13 @@
 class LikeUserSerializer < ActiveModel::Serializer
-  attributes :active_likes, :passive_likes
-  attribute(:active_likes_length) { object.active_likes.length }
-  attribute(:passive_likes_length) { object.passive_likes.length }
+  attributes :active_liked_user, :passive_liked_user
+  attribute(:active_liked_user_length) { object.active_liked_user.length }
+  attribute(:passive_liked_user_length) { object.passive_liked_user.length }
 
-  def active_likes
-    ActiveModel::SerializableResource.new(object.active_likes, each_serializer: UserSerializer)
+  def active_liked_user
+    ActiveModel::SerializableResource.new(object.active_liked_user, each_serializer: UserSerializer)
   end
 
-  def passive_likes
-    ActiveModel::SerializableResource.new(object.passive_likes, each_serializer: UserSerializer)
+  def passive_liked_user
+    ActiveModel::SerializableResource.new(object.passive_liked_user, each_serializer: UserSerializer)
   end
 end
