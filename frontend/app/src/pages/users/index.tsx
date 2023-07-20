@@ -72,7 +72,9 @@ const Users: NextPage = () => {
         is_like: is_like,
       }),
     });
+
     const data: Like = await response.json();
+
     is_like
       ? toast.success(`${other_user.profile?.nickname} をいいねしました!!`)
       : toast.success(`次のユーザーを表示します...`);

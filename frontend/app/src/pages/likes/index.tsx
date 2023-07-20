@@ -4,7 +4,7 @@ import Image from "next/image";
 // Custom SWR
 import { useUserLikes } from "hooks/api/like";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Components and pages
 import Loading from "pages/loading";
@@ -14,17 +14,21 @@ const Likes: NextPage = () => {
   const [isActiveLikes, setIsActiveLikes] = useState(true);
   const { userLikes, isLoading, isError } = useUserLikes();
 
+  useEffect(() => {
+    console.log(userLikes);
+  });
+
   if (isLoading) return <Loading />;
   if (isError) return <div>error...</div>;
 
   // いいねした/されたユーザーを切り替えて表示
   const renderLikeUsers = () => {
     const likes = isActiveLikes
-      ? userLikes?.activeLikes
-      : userLikes?.passiveLikes;
+      ? userLikes?.activeLikedUser
+      : userLikes?.passiveLikedUser;
     const likesLength = isActiveLikes
-      ? userLikes?.activeLikesLength
-      : userLikes?.passiveLikesLength;
+      ? userLikes?.activeLikedUserLength
+      : userLikes?.passiveLikedUserLength;
 
     if (likesLength === 0) {
       return (
@@ -44,8 +48,8 @@ const Likes: NextPage = () => {
           <div className="mx-auto max-w-2xl">
             <h1 className="p-10 text-center text-4xl">
               {isActiveLikes
-                ? "いいねしたユーザー"
-                : "いいねしてくれたユーザー"}
+                ? `いいねしたユーザー (${likesLength})`
+                : `いいねしてくれたユーザー (${likesLength})`}
             </h1>
             {likes.map((likeUser) => (
               <div key={likeUser.id} className="flex flex-col">

@@ -34,10 +34,10 @@ export type Like = {
 };
 
 export type UserLikes = {
-  activeLikes: User[];
-  passiveLikes: User[];
-  activeLikesLength: number;
-  passiveLikesLength: number;
+  activeLikedUser: User[];
+  passiveLikedUser: User[];
+  activeLikedUserLength: number;
+  passiveLikedUserLength: number;
 };
 
 // チャットルームのデータ
