@@ -1,4 +1,5 @@
 require 'auth0'
+require 'debug'
 
 # Auth0クライアントのインスタンス作成
 auth0_client = Auth0Client.new(
@@ -22,15 +23,11 @@ end
 
 users_data.each do |user_data|
 
-  # Auth0から抽出したデータをUserモデルを使用して、独自のDBに反映
-  user = User.create!(
-    sub: user_data[:sub],
-    created_at: user_data[:created_at],
-    updated_at: user_data[:updated_at]
-  )
+  # Auth0から抽出したデータで、ユーザーを作成し、独自DBに反映
+  user = User.find_or_create_by(sub: user_data[:sub])
 
-  # test_imagesに保存されている画像パスを配列に格納し、その配列の値を１つランダムで取り出す
-  def get_images_path
+  # pubulic/test_image 保存されている画像パスを配列に格納し、その配列の値を１つランダムで取り出す
+  def get_image_path
     images_dir = File.join(Rails.root, 'public', 'test_images')
     image_path = Dir.glob("#{images_dir}/**/*.{jpg,jpeg,png}")
     image_urls = image_path.map { |path| "./#{path.split('app/').last}"}
@@ -38,22 +35,48 @@ users_data.each do |user_data|
   end
 
   # ユーザープロフィールを作成
-  user.create_profile!(
-    nickname: user_data[:nickname],
-    gender: ["man", "woman"].sample,
-    game_category: ["Apex", "Valorant"].sample,
-    game_rank: ["Bronze","Silver", "Gold", "Platinum"].sample,
-    discord_id: "#0000",
-    image: File.open(get_images_path()),
-    user_id: user[:id]
-  )
+  Profile.find_or_create_by(user_id: user.id) do |profile|
+    profile.nickname = user_data[:nickname]
+    profile.gender = ["man", "woman"].sample
+    profile.game_category = ["Apex", "Valorant"].sample
+    profile.game_rank = ["Bronze","Silver", "Gold", "Platinum"].sample
+    profile.discord_id = "#0000"
+    profile.image = File.open(get_image_path())
+  end
+end
 
-  users_except_current = User.where.not(id: user.id)
-  users_except_current.each do |other_user|
-    Like.create!(
-      from_user_id: user.id,
-      to_user_id: other_user.id,
-      is_like: [true, false].sample
-    )
+def create_like(from_user_id, to_user_id)
+  is_matched = false
+
+  # 自分がいいねしたユーザーのLikeレコードを作成
+  active_like = Like.find_or_create_by(from_user_id: from_user_id, to_user_id: to_user_id) do |like|
+    like.is_like = [true, false].sample
+  end
+
+  # 相手が自分をいいねしたレコードを探す
+  passive_like = Like.find_or_create_by(from_user_id: to_user_id, to_user_id: from_user_id) do |like|
+    like.is_like = [true, false].sample
+  end
+
+  # 相手がいいねしてくれていれば、ルームを作成し、マッチング
+  if active_like.is_like && passive_like.is_like
+    exist_chat_room = ChatRoom.joins(:chat_room_users).where(chat_room_users: { user_id: [from_user_id, to_user_id]}).group(:id).having("COUNT(*)=2").first
+
+    unless exist_chat_room
+      chat_room = ChatRoom.create
+      ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: active_like.from_user_id)
+      ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: passive_like.from_user_id)
+    end
+
+    is_matched = true
+  end
+end
+
+users_data.first(10).each do |user_data|
+  current_user = User.find_by(sub: user_data[:sub])
+  other_users = User.where.not(id: current_user.id).first(10)
+
+  other_users.each do |other_user|
+    create_like(current_user.id, other_user.id)
   end
 end
