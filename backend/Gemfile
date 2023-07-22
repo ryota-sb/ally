@@ -13,10 +13,9 @@ gem 'jwt'
 gem 'carrierwave'
 gem 'auth0'
 gem 'active_model_serializers'
+gem 'fog-aws'
 
 group :development, :test do
-  gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'debug'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
