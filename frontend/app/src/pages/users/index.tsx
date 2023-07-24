@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from "next";
+import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
