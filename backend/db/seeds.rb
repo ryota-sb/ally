@@ -41,7 +41,7 @@ users_data.each do |user_data|
     profile.game_category = ["Apex", "Valorant"].sample
     profile.game_rank = ["Bronze","Silver", "Gold", "Platinum"].sample
     profile.discord_id = "#0000"
-    # profile.image = File.open(get_image_path())
+    profile.image = File.open(get_image_path())
   end
 end
 
