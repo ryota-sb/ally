@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["backend"],
+    domains: ["backend", "ally-image-bucket.s3.ap-northeast-1.amazonaws.com"],
   },
 };
