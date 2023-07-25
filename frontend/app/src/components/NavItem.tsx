@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const variants = {
@@ -17,15 +18,17 @@ const variants = {
   },
 };
 
-const NavItem = ({ item }: any) => {
+const NavItem = ({ item, href }: any) => {
   return (
-    <motion.li
-      variants={variants}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <h3 className="text-md">{item}</h3>
-    </motion.li>
+    <Link href={href}>
+      <motion.li
+        variants={variants}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <h3 className="text-md">{item}</h3>
+      </motion.li>
+    </Link>
   );
 };
 

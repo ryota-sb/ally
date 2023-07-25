@@ -13,7 +13,7 @@ const Path = (props: any) => (
 const NavToggleIcon = ({ toggle }: any) => (
   <button
     onClick={toggle}
-    className="absolute right-10 flex h-[50px] w-[50px] items-center justify-end"
+    className="absolute right-10 z-20 flex h-[50px] w-[50px] items-center justify-end"
   >
     <svg width="23" height="23">
       <Path

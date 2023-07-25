@@ -93,7 +93,7 @@ const Header: React.FC = () => {
       >
         <motion.div
           variants={sidebar}
-          className="absolute top-0 right-0 bottom-0 flex w-[300px] items-center justify-end bg-gray-300 bg-opacity-90"
+          className="absolute top-0 right-0 bottom-0 z-10 flex w-[300px] items-center justify-end bg-gray-300 bg-opacity-100"
         />
         <Navigation />
         <NavToggleIcon toggle={() => toggleOpen()} />

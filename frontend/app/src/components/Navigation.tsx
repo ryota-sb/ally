@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import NavItem from "components/NavItem";
 
+// Recoil
+import { useRecoilValue } from "recoil";
+import userState from "recoil/atoms/userState";
+
 const variants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
@@ -10,17 +14,26 @@ const variants = {
   },
 };
 
-const items = ["探す", "プロフィール", "ログアウト"];
+const Navigation = () => {
+  const currentUser = useRecoilValue(userState);
 
-const Navigation = () => (
-  <motion.ul
-    variants={variants}
-    className="absolute top-[68px] right-0 flex w-[230px] flex-col gap-4 p-[25px]"
-  >
-    {items.map((item, index) => (
-      <NavItem item={item} key={index} />
-    ))}
-  </motion.ul>
-);
+  const items = [
+    { name: "いいねした・された", href: "/likes" },
+    { name: "マッチング", href: "/chatRooms" },
+    { name: "探す", href: "/" },
+    { name: "プロフィール", href: `/users/${currentUser.id}` },
+  ];
+
+  return (
+    <motion.ul
+      variants={variants}
+      className="absolute top-[90px] right-0 z-30 flex w-[230px] flex-col gap-4"
+    >
+      {items.map((item, index) => (
+        <NavItem item={item.name} href={item.href} key={index} />
+      ))}
+    </motion.ul>
+  );
+};
 
 export default Navigation;
