@@ -18,17 +18,31 @@ const variants = {
   },
 };
 
-const NavItem = ({ item, href }: any) => {
+const NavItem = ({ item, href, component }: any) => {
   return (
-    <Link href={href}>
-      <motion.li
-        variants={variants}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <h3 className="text-md">{item}</h3>
-      </motion.li>
-    </Link>
+    <>
+      {href ? (
+        <Link href={href}>
+          <motion.li
+            variants={variants}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="cursor-pointer"
+          >
+            <h3 className="text-md">{item}</h3>
+          </motion.li>
+        </Link>
+      ) : (
+        <motion.li
+          variants={variants}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="cursor-pointer"
+        >
+          <h3 className="text-md">{component}</h3>
+        </motion.li>
+      )}
+    </>
   );
 };
 

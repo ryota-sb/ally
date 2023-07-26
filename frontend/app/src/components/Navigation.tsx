@@ -5,6 +5,8 @@ import NavItem from "components/NavItem";
 import { useRecoilValue } from "recoil";
 import userState from "recoil/atoms/userState";
 
+import Logout from "components/Logout";
+
 const variants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
@@ -22,6 +24,7 @@ const Navigation = () => {
     { name: "マッチング", href: "/chatRooms" },
     { name: "探す", href: "/" },
     { name: "プロフィール", href: `/users/${currentUser.id}` },
+    { name: "ログアウト", component: <Logout /> },
   ];
 
   return (
@@ -30,7 +33,12 @@ const Navigation = () => {
       className="absolute top-[90px] right-0 z-30 flex w-[230px] flex-col gap-4"
     >
       {items.map((item, index) => (
-        <NavItem item={item.name} href={item.href} key={index} />
+        <NavItem
+          item={item.name}
+          href={item.href}
+          key={index}
+          component={item.component}
+        />
       ))}
     </motion.ul>
   );
