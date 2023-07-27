@@ -2,8 +2,10 @@ import { NextPage } from "next";
 import { useEffect } from "react";
 import axios from "axios";
 
+import getBasePath from "lib/getBasePath";
+
 // Recoil
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import userState from "recoil/atoms/userState";
 import profileState from "recoil/atoms/profileState";
 
@@ -15,21 +17,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import Loading from "pages/loading";
 
-import getBasePath from "lib/getBasePath";
-
-// 2秒後にルートパスに画面遷移
-if (typeof window !== "undefined") {
-  if (window.location.pathname === "/callback") {
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2000);
-  }
-}
-
 const Callback: NextPage = () => {
-  const setUser = useSetRecoilState(userState);
-  const setProfile = useSetRecoilState(profileState);
+  const [user, setUser] = useRecoilState(userState);
+  const [profile, setProfile] = useRecoilState(profileState);
   const { getAccessTokenSilently } = useAuth0();
+
+  // 2秒後にルートパスに遷移
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.pathname === "/callback" && user && profile) {
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
+    }
+  }, [user, profile]);
 
   useEffect(() => {
     // Auth0のアクセストークン取得、Recoilへ保存
