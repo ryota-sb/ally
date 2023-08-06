@@ -25,13 +25,13 @@ const Callback: NextPage = () => {
   // 2秒後にルートパスに遷移
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (window.location.pathname === "/callback" && user && profile) {
+      if (window.location.pathname === "/callback" && user) {
         setTimeout(() => {
           window.location.href = "/";
         }, 2000);
       }
     }
-  }, [user, profile]);
+  }, [user]);
 
   useEffect(() => {
     // Auth0のアクセストークン取得、Recoilへ保存
