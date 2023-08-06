@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'auth0'
 gem 'active_model_serializers'
 gem 'fog-aws'
+gem "dockerfile-rails", ">= 1.5", :group => :development
 
 group :development, :test do
   gem 'debug'
@@ -26,4 +27,3 @@ group :development do
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
