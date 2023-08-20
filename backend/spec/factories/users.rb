@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user do
-    id { "100" }
-    sub { "sub1206" }
+    sequence :id, "1"
+    sequence :sub, "sub_1"
   end
 end
