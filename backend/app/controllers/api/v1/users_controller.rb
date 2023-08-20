@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
     other_user = User.unliked_guest_users(@current_user).order(Arel.sql('RANDOM()')).first
 
     if other_user
-      render json: other_user
+      render json: other_user, serializer: UserSerializer
     else
       render json: { message: "これ以上ユーザーが存在しません" }
     end
@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/users/:id
   def show
     user = User.preload(:profile).find(params[:id])
-    render json: user
+    render json: user, serializer: UserSerializer
   end
 end
 
