@@ -11,6 +11,10 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+ActiveRecord::Base.logger = Logger.new($stdout) # SQL出力
+ActiveRecord::Base.verbose_query_logs = true    # SQLがコード上のどこで実行されたかを出力
+
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
