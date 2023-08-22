@@ -21,9 +21,9 @@ class User < ApplicationRecord
   validates :sub, uniqueness: true
 
   scope :guest_users, ->(user) { where.not(id: user.id) } # ログインユーザー以外（ゲストユーザー）を取得
-  scope :unliked,     ->(user) { where.not(id: user.likes_from.select(:to_user_id)) } # いいねしていないユーザーを取得
+  scope :unliked,     ->(user) { where.not(id: user.likes_from.select(:to_user_id)) } # いいねの評価をしていないユーザーを取得
 
-  # いいねしていないゲストユーザー取得
+  # いいねの評価をしていないゲストユーザー取得
   def self.unliked_guest_users(user)
     unliked(user).guest_users(user)
   end
