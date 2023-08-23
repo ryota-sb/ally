@@ -79,13 +79,5 @@ RSpec.describe User, type: :model do
         expect(guest_users).not_to include(current_user)
       end
     end
-
-    context 'unliked' do
-      let!(:like) { create(:like, from_user: current_user, to_user: other_user) }
-      it 'いいねしていないユーザーを取得する' do
-        unliked_user = User.unliked(current_user)
-        debugger
-      end
-    end
   end
 end
