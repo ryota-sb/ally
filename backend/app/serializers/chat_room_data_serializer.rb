@@ -1,5 +1,5 @@
 class ChatRoomDataSerializer < ActiveModel::Serializer
-  type "chat_room_data"
+  type 'chat_room_data'
   attributes :chat_room, :other_user, :messages
 
   def chat_room

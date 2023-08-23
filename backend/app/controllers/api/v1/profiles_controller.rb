@@ -1,5 +1,4 @@
 class Api::V1::ProfilesController < ApplicationController
-  
   # POST /api/v1/porofiles
   def create
     profile = Profile.new(profile_params)

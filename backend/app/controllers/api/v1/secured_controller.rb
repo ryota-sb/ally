@@ -1,12 +1,11 @@
 class Api::V1::SecuredController < ApplicationController
-
   # GET /api/v1/login
   def login
     render json: {
       status: 200,
       message: "SUB: #{@current_user.sub}でログインしました。",
       user: @current_user,
-      profile: @current_user.profile || ""
+      profile: @current_user.profile || ''
     }
   end
 

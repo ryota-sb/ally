@@ -7,9 +7,9 @@ Rails.application.routes.draw do
 
       get 'random_user_with_profile', to: 'users#random_user_with_profile'
       resources :users, only: :show
-      resources :profiles, only: [:create, :update]
-      resources :likes, only: [:index, :create]
-      resources :chat_rooms, only: [:index, :show]
+      resources :profiles, only: %i[create update]
+      resources :likes, only: %i[index create]
+      resources :chat_rooms, only: %i[index show]
       resources :messages, only: :create
     end
   end

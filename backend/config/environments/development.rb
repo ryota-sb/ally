@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   config.cache_classes = false
@@ -6,7 +6,7 @@ Rails.application.configure do
   config.consider_all_requests_local = true
 
   # 開発環境のホスト設定
-  config.hosts << "backend"
+  config.hosts << 'backend'
 
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.cache_store = :memory_store

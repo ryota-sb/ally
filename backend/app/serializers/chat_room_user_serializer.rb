@@ -1,5 +1,5 @@
 class ChatRoomUserSerializer < ActiveModel::Serializer
-  type "chat_room_users"
+  type 'chat_room_users'
   attributes :chat_room, :other_user, :last_message
 
   def chat_room
@@ -14,6 +14,7 @@ class ChatRoomUserSerializer < ActiveModel::Serializer
 
   def last_message
     return nil if object[:last_message].nil?
+
     serialized_message = MessageSerializer.new(object[:last_message])
     serialized_message.attributes
   end

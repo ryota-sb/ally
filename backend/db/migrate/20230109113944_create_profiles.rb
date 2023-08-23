@@ -8,7 +8,7 @@ class CreateProfiles < ActiveRecord::Migration[6.1]
       t.bigint :user_id, null: false
       t.string :image
       t.string :nickname, null: false
-      t.index ["user_id"], name: "index_profiles_on_user_id"
+      t.index ['user_id'], name: 'index_profiles_on_user_id'
 
       t.timestamps
     end

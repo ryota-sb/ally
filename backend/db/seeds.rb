@@ -22,7 +22,6 @@ users_data = auth_users.map do |user|
 end
 
 users_data.each do |user_data|
-
   # Auth0から抽出したデータで、ユーザーを作成し、独自DBに反映
   user = User.find_or_create_by(sub: user_data[:sub])
 
@@ -30,18 +29,18 @@ users_data.each do |user_data|
   def get_image_path
     images_dir = File.join(Rails.root, 'public', 'test_images')
     image_path = Dir.glob("#{images_dir}/**/*.{jpg,jpeg,png}")
-    image_urls = image_path.map { |path| "./#{path.split('app/').last}"}
-    return image_urls.sample
+    image_urls = image_path.map { |path| "./#{path.split('app/').last}" }
+    image_urls.sample
   end
 
   # ユーザープロフィールを作成
   Profile.find_or_create_by(user_id: user.id) do |profile|
     profile.nickname = user_data[:nickname]
-    profile.gender = ["man", "woman"].sample
-    profile.game_category = ["Apex", "Valorant"].sample
-    profile.game_rank = ["Bronze","Silver", "Gold", "Platinum"].sample
-    profile.discord_id = "#0000"
-    profile.image = File.open(get_image_path())
+    profile.gender = %w[man woman].sample
+    profile.game_category = %w[Apex Valorant].sample
+    profile.game_rank = %w[Bronze Silver Gold Platinum].sample
+    profile.discord_id = '#0000'
+    profile.image = File.open(get_image_path)
   end
 end
 
@@ -59,17 +58,18 @@ def create_like(from_user_id, to_user_id)
   end
 
   # 相手がいいねしてくれていれば、ルームを作成し、マッチング
-  if active_like.is_like && passive_like.is_like
-    exist_chat_room = ChatRoom.joins(:chat_room_users).where(chat_room_users: { user_id: [from_user_id, to_user_id]}).group(:id).having("COUNT(*)=2").first
+  return unless active_like.is_like && passive_like.is_like
 
-    unless exist_chat_room
-      chat_room = ChatRoom.create
-      ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: active_like.from_user_id)
-      ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: passive_like.from_user_id)
-    end
+  exist_chat_room = ChatRoom.joins(:chat_room_users).where(chat_room_users: { user_id: [from_user_id,
+                                                                                        to_user_id] }).group(:id).having('COUNT(*)=2').first
 
-    is_matched = true
+  unless exist_chat_room
+    chat_room = ChatRoom.create
+    ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: active_like.from_user_id)
+    ChatRoomUser.find_or_create_by(chat_room_id: chat_room.id, user_id: passive_like.from_user_id)
   end
+
+  is_matched = true
 end
 
 users_data.first(10).each do |user_data|

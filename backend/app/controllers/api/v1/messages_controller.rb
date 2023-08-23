@@ -1,5 +1,4 @@
 class Api::V1::MessagesController < ApplicationController
-
   # POST /api/v1/messages
   def create
     message = Message.new(message_params)
@@ -8,7 +7,7 @@ class Api::V1::MessagesController < ApplicationController
     if message.save
       render json: { status: 200, message: message }
     else
-      render json: { status: 500, message: message.errors.full_messages.join(", ") }
+      render json: { status: 500, message: message.errors.full_messages.join(', ') }
     end
   end
 

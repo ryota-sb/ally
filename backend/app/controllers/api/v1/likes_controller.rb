@@ -1,14 +1,13 @@
 class Api::V1::LikesController < ApplicationController
-
   # GET /api/v1/likes
   def index
     render json: @current_user, serializer: LikeUserSerializer
   end
-  
+
   # POST /api/v1/likes
   def create
     is_matched = false
-    
+
     # 自分がいいねした場合のレコード作成
     active_like = Like.find_or_initialize_by(like_params)
     # 相手が自分のことをいいねしているかのレコードを探す
@@ -31,14 +30,14 @@ class Api::V1::LikesController < ApplicationController
         chat_room_id: chat_room.id,
         user_id: passive_like.from_user_id
       )
-      
+
       is_matched = true
     end
 
     if active_like.save
       render json: { status: 200, like: active_like, is_matched: is_matched }
     else
-      render json: { status: 500, message: "作成に失敗しました" }
+      render json: { status: 500, message: '作成に失敗しました' }
     end
   end
 
