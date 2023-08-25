@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'アソシエーション' do
+  describe '関連付け' do
     let(:association) do
       described_class.reflect_on_association(target)
     end
